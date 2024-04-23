@@ -194,16 +194,16 @@ void SetBoardFromFen(char *fen, Position *pos)
     SetHalfMoveNumber(fen, pos);
     SetFullMoveNumber(fen, pos);
 
-    for (int p = EMPTY; p <= BK; p++)
-    {
-        printf("%d -> %lu\n", p, pos->pieces[p]);
-    }
+    // for (int p = EMPTY; p <= BK; p++)
+    // {
+    //     printf("%d -> %lu\n", p, pos->pieces[p]);
+    // }
 
-    printf("White BB - %lu\n", pos->occupancy[COLOR_WHITE]);
-    printf("BLACK BB - %lu\n", pos->occupancy[COLOR_BLACK]);
-    printf("Turn - %d\n", pos->sideToMove);
-    printf("Castling - %d\n", pos->castling);
-    printf("enpass - %lu\n", pos->enpassantSquare);
-    printf("half - %d\n", pos->halfMoves);
-    printf("full - %d\n", pos->fullMoves);
+    // printf("White BB - %lu\n", pos->occupancy[COLOR_WHITE]);
+    // printf("BLACK BB - %lu\n", pos->occupancy[COLOR_BLACK]);
+    // printf("Turn - %d\n", pos->sideToMove);
+    // printf("Castling - %d\n", pos->castling);
+    // printf("enpass - %lu\n", pos->enpassantSquare);
+    // printf("half - %d\n", pos->halfMoves);
+    // printf("full - %d\n", pos->fullMoves);
 }

@@ -1,5 +1,5 @@
-#ifndef UTILITIES   /* Include guard */
-#define UTILITIES
+#ifndef UTILITIES_H   /* Include guard */
+#define UTILITIES_H
 
 #include "string.h"
 
