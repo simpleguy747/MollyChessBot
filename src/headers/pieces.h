@@ -14,7 +14,7 @@
 #define QUEEN 5
 #define KING 6
 
-// Pieces. // piecetype + 6*color
+// Pieces. // piecetype + 8*color
 #define WP 1
 #define WN 2
 #define WB 3
@@ -34,5 +34,5 @@
 
 #define TYPE_OF_PIECE(piece) ((piece)&7)
 #define COLOR_OF_PIECE(piece) ((piece)>>3)
-
+#define MAKE_PIECE(type,color) ((type)+(color<<3))
 #endif

@@ -4,7 +4,7 @@
 #include <stdint.h>
 
 typedef struct Position {
-    uint64_t pieces[15];
+    uint64_t type_of_pieces[7];
     uint64_t occupancy[2];
     int sideToMove;
     int  castling;

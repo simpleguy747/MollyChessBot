@@ -14,14 +14,20 @@ void DisplayBoard(Position *pos)
         {
             int sq = 8 * r + c;
             uint64_t sq_bb = (1ULL << sq);
-            for (int p = EMPTY; p <= BK; p++)
+            int piece = EMPTY;
+            for (int type_of_piece = EMPTY; type_of_piece <= KING; type_of_piece++)
             {
 
-                if ((sq_bb & pos->pieces[p]) != 0)
+                for (int color_of_piece = COLOR_WHITE; color_of_piece <= COLOR_BLACK; color_of_piece++)
                 {
-                    printf(" %c ", PIECES_STR[p]);
+
+                    if ((sq_bb & pos->type_of_pieces[type_of_piece] & pos->occupancy[color_of_piece]) != 0)
+                    {
+                        piece = MAKE_PIECE(type_of_piece, color_of_piece);
+                    }
                 }
             }
+            printf(" %c ", PIECES_STR[piece]);
         }
         printf("\n");
     }

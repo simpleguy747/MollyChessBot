@@ -32,23 +32,24 @@ void SetBoard(char *fen, Position *pos)
             // Parse piece
             int piece = indexOf(PIECES_STR, *ptr);
             int colorOfPiece = COLOR_OF_PIECE(piece);
+            int typeOfPiece = TYPE_OF_PIECE(piece);
 
-            pos->pieces[piece] |= (1ULL << sq);
+            pos->type_of_pieces[typeOfPiece] |= (1ULL << sq);
             pos->occupancy[colorOfPiece] |= (1ULL << sq);
             sq++;
         }
         ptr++;
     }
 
-    pos->pieces[EMPTY] = ~(pos->occupancy[COLOR_WHITE] | pos->occupancy[COLOR_BLACK]);
+    pos->type_of_pieces[EMPTY] = ~(pos->occupancy[COLOR_WHITE] | pos->occupancy[COLOR_BLACK]);
 }
 
 // Clear the board.
 void ClearBoard(Position *pos)
 {
-    for (int piece = EMPTY; piece <= BK; piece++)
+    for (int piece = EMPTY; piece <= KING; piece++)
     {
-        pos->pieces[piece] = 0ULL;
+        pos->type_of_pieces[piece] = 0ULL;
     }
 
     for (int color = COLOR_WHITE; color <= COLOR_BLACK; color++)
