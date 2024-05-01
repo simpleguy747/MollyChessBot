@@ -67,4 +67,45 @@
 #define SQ_H8 63
 
 #define SQ_NONE_BB 0
+
+// FILES
+#define FILE_A 0
+#define FILE_B 1
+#define FILE_C 2
+#define FILE_D 3
+#define FILE_E 4
+#define FILE_F 5
+#define FILE_G 6
+#define FILE_H 7
+
+// RANKS
+#define RANK_1 0
+#define RANK_2 1
+#define RANK_3 2
+#define RANK_4 3
+#define RANK_5 4
+#define RANK_6 5
+#define RANK_7 6
+#define RANK_8 7
+
+// Bitboards for FILE
+#define FILE_A_BB 0x0101010101010101ULL
+#define FILE_B_BB 0x0202020202020202ULL
+#define FILE_C_BB 0x0404040404040404ULL
+#define FILE_D_BB 0x0808080808080808ULL
+#define FILE_E_BB 0x1010101010101010ULL
+#define FILE_F_BB 0x2020202020202020ULL
+#define FILE_G_BB 0x4040404040404040ULL
+#define FILE_H_BB 0x8080808080808080ULL
+
+// Bitboards for Ranks
+#define RANK_1_BB 0x00000000000000ff
+#define RANK_2_BB 0x000000000000ff00
+#define RANK_3_BB 0x0000000000ff0000
+#define RANK_4_BB 0x00000000ff000000
+#define RANK_5_BB 0x000000ff00000000
+#define RANK_6_BB 0x0000ff0000000000
+#define RANK_7_BB 0x00ff000000000000
+#define RANK_8_BB 0xff00000000000000
+
 #endif

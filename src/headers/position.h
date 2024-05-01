@@ -13,5 +13,10 @@ typedef struct Position {
     int fullMoves;
 } Position;
 
+typedef struct Move{
+    int move;
+    int mvv_lva_value;
+} Move;
+
 
 #endif
