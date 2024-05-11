@@ -4,6 +4,7 @@
 #include "pieces.h"
 #include "position.h"
 #include "squares.h"
+#include "movegen.h"
 
 // Display the board.
 void DisplayBoard(Position *pos)
@@ -13,22 +14,41 @@ void DisplayBoard(Position *pos)
         for (int c = 0; c <= 7; c++)
         {
             int sq = 8 * r + c;
-            uint64_t sq_bb = (1ULL << sq);
-            int piece = EMPTY;
-            for (int type_of_piece = EMPTY; type_of_piece <= KING; type_of_piece++)
-            {
-
-                for (int color_of_piece = COLOR_WHITE; color_of_piece <= COLOR_BLACK; color_of_piece++)
-                {
-
-                    if ((sq_bb & pos->type_of_pieces[type_of_piece] & pos->occupancy[color_of_piece]) != 0)
-                    {
-                        piece = MAKE_PIECE(type_of_piece, color_of_piece);
-                    }
-                }
-            }
-            printf(" %c ", PIECES_STR[piece]);
+            printf(" %c ", PIECES_STR[pos->board[sq]]);
         }
         printf("\n");
     }
+}
+
+void DisplayMove(int move)
+{
+    int toSq = SQ_TO(move);
+    int fromSq = SQ_FROM(move);
+
+    int toSq_rank = toSq >> 3;
+    int toSq_file = toSq & 7;
+
+    int fromSq_rank = fromSq >> 3;
+    int fromSq_file = fromSq & 7;
+
+    int typeOfMove = move >> 12;
+    char promotionPiece = '\0';
+
+    switch (typeOfMove)
+    {
+    case PROMOTION_KNIGHT:
+        promotionPiece = 'n';
+        break;
+    case PROMOTION_BISHOP:
+        promotionPiece = 'b';
+        break;
+    case PROMOTION_ROOK:
+        promotionPiece = 'r';
+        break;
+    case PROMOTION_QUEEN:
+        promotionPiece = 'q';
+        break;
+    }
+
+    printf("%c%c%c%c%c\n", FILES_STR[fromSq_file], RANKS_STR[fromSq_rank], FILES_STR[toSq_file], RANKS_STR[toSq_rank], promotionPiece);
 }

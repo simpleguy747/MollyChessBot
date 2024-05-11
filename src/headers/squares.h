@@ -1,6 +1,8 @@
 #ifndef SQUARES_H   /* Include guard */
 #define SQUARES_H
 
+#include<stdint.h>
+
 #define SQ_A1 0
 #define SQ_B1 1
 #define SQ_C1 2
@@ -98,6 +100,9 @@
 #define FILE_G_BB 0x4040404040404040ULL
 #define FILE_H_BB 0x8080808080808080ULL
 
+#define NOT_FILE_A_BB 0xfefefefefefefefeULL
+#define NOT_FILE_H_BB 0x7f7f7f7f7f7f7f7fULL
+
 // Bitboards for Ranks
 #define RANK_1_BB 0x00000000000000ff
 #define RANK_2_BB 0x000000000000ff00
@@ -107,5 +112,13 @@
 #define RANK_6_BB 0x0000ff0000000000
 #define RANK_7_BB 0x00ff000000000000
 #define RANK_8_BB 0xff00000000000000
+
+// Files and ranks in string.
+#define RANKS_STR "12345678"
+#define FILES_STR "abcdefgh"
+// Colorwise ranks.
+extern const uint64_t ColorWiseRanks[2][8];
+extern const uint64_t ColorWiseEnpassantRanks[2][2];
+
 
 #endif

@@ -11,7 +11,7 @@
 #include "squares.h"
 #include "utilities.h"
 
-// Set the board as per the pieces and update the pieces and occupancy bitboards better.
+// Set the board as per the pieces and update the pieces and occupancy_by_color bitboards better.
 void SetBoard(char *fen, Position *pos)
 {
     char *ptr = fen;
@@ -31,22 +31,34 @@ void SetBoard(char *fen, Position *pos)
         {
             // Parse piece
             int piece = indexOf(PIECES_STR, *ptr);
-            int colorOfPiece = COLOR_OF_PIECE(piece);
-            int typeOfPiece = TYPE_OF_PIECE(piece);
-
-            pos->type_of_pieces[typeOfPiece] |= (1ULL << sq);
-            pos->occupancy[colorOfPiece] |= (1ULL << sq);
+            pos->board[sq] = piece;
             sq++;
         }
         ptr++;
     }
-
-    pos->type_of_pieces[EMPTY] = ~(pos->occupancy[COLOR_WHITE] | pos->occupancy[COLOR_BLACK]);
 }
 
+void UpdateBitBoards(Position *pos)
+{
+
+    for (int sq = SQ_A1; sq <= SQ_H8; sq++)
+    {
+        int typeOfpiece = TYPE_OF_PIECE(pos->board[sq]);
+        pos->type_of_pieces[typeOfpiece] |= (1ULL << sq);
+        if (typeOfpiece != EMPTY)
+        {
+            int colorOfPiece = COLOR_OF_PIECE(pos->board[sq]);
+            pos->occupancy_by_color[colorOfPiece] |= (1ULL << sq);
+        }
+    }
+}
 // Clear the board.
 void ClearBoard(Position *pos)
 {
+    for (int sq = SQ_A1; sq <= SQ_H8; sq++)
+    {
+        pos->board[sq] = EMPTY;
+    }
     for (int piece = EMPTY; piece <= KING; piece++)
     {
         pos->type_of_pieces[piece] = 0ULL;
@@ -54,7 +66,7 @@ void ClearBoard(Position *pos)
 
     for (int color = COLOR_WHITE; color <= COLOR_BLACK; color++)
     {
-        pos->occupancy[color] = 0ULL;
+        pos->occupancy_by_color[color] = 0ULL;
     }
 
     pos->sideToMove = -1;
@@ -189,22 +201,23 @@ void SetBoardFromFen(char *fen, Position *pos)
 {
     ClearBoard(pos);
     SetBoard(fen, pos);
+    UpdateBitBoards(pos);
     SetSideToMove(fen, pos);
     SetCastlingRights(fen, pos);
     SetEnPassantSquare(fen, pos);
     SetHalfMoveNumber(fen, pos);
     SetFullMoveNumber(fen, pos);
 
-    // for (int p = EMPTY; p <= BK; p++)
-    // {
-    //     printf("%d -> %lu\n", p, pos->pieces[p]);
-    // }
+    for (int p = EMPTY; p <= KING; p++)
+    {
+        printf("%d -> %lu\n", p, pos->type_of_pieces[p]);
+    }
 
-    // printf("White BB - %lu\n", pos->occupancy[COLOR_WHITE]);
-    // printf("BLACK BB - %lu\n", pos->occupancy[COLOR_BLACK]);
-    // printf("Turn - %d\n", pos->sideToMove);
-    // printf("Castling - %d\n", pos->castling);
-    // printf("enpass - %lu\n", pos->enpassantSquare);
-    // printf("half - %d\n", pos->halfMoves);
-    // printf("full - %d\n", pos->fullMoves);
+    printf("White BB - %lu\n", pos->occupancy_by_color[COLOR_WHITE]);
+    printf("BLACK BB - %lu\n", pos->occupancy_by_color[COLOR_BLACK]);
+    printf("Turn - %d\n", pos->sideToMove);
+    printf("Castling - %d\n", pos->castling);
+    printf("enpass - %lu\n", pos->enpassantSquare);
+    printf("half - %d\n", pos->halfMoves);
+    printf("full - %d\n", pos->fullMoves);
 }
