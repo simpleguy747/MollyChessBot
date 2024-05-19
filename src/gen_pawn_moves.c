@@ -1,6 +1,6 @@
 #include "direction.h"
 #include "gen_pawn_moves.h"
-#include "movegen.h"
+#include "gen_moves_base.h"
 #include "pieces.h"
 #include "position.h"
 #include "squares.h"
