@@ -8,7 +8,7 @@ int main()
 {
   printf("Molly v1.0\n");
   Position pos[1];
-  SetBoardFromFen("3r1r1k/4P2p/1p3p1p/P1pP2P1/8/2P5/4P3/K7 w - c6 0 1", pos);
+  SetBoardFromFen("rnbqkbnr/pppppppp/8/8/4K3/8/PPPPPPPP/RNBQ1BNR w kq - 0 1", pos);
   DisplayBoard(pos);
 
   MoveList moveList[1];
