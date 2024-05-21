@@ -1,8 +1,10 @@
 #include "attacks.h"
 #include "direction.h"
-#include "gen_pawn_moves.h"
-#include "gen_knight_moves.h"
+#include "gen_bishop_moves.h"
 #include "gen_king_moves.h"
+#include "gen_knight_moves.h"
+#include "gen_pawn_moves.h"
+#include "gen_rook_moves.h"
 #include "movegen.h"
 #include "pieces.h"
 #include "position.h"
@@ -17,7 +19,10 @@ void GenerateMoves(Position *pos, MoveList *moveList)
     const int forwardDirection = 8 - (16 * us);
     const uint64_t emptyBitboard = pos->type_of_pieces[EMPTY];
     const uint64_t enemyPiecesBitBoard = pos->occupancy_by_color[us ^ 1];
+    const uint64_t occupied = ~pos->type_of_pieces[EMPTY];
     GeneratePawnMoves(us, pos, moveList, emptyBitboard, enemyPiecesBitBoard, forwardDirection);
     GenerateKnightMoves(us, pos, moveList, emptyBitboard, NO_CAP);
     GenerateKingNonCastleMoves(us, pos, moveList, emptyBitboard, NO_CAP);
+    GenerateBishopMoves(us, pos, moveList, emptyBitboard,occupied, NO_CAP);
+    GenerateRookMoves(us, pos, moveList, emptyBitboard,occupied, NO_CAP);
 }

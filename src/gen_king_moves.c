@@ -1,10 +1,9 @@
-
+#include "attacks.h"
 #include "gen_king_moves.h"
 #include "gen_moves_base.h"
-#include <stdint.h>
 #include "pieces.h"
-#include "attacks.h"
 #include "utilities.h"
+#include <stdint.h>
 
 void GenerateKingNonCastleMoves(const int us, const Position *pos, MoveList *moveList, const uint64_t targetBitboard, int typeOfMove)
 {
@@ -13,6 +12,6 @@ void GenerateKingNonCastleMoves(const int us, const Position *pos, MoveList *mov
     {
         int sqFrom = PopLSB(ourKing);
         uint64_t kingAttacksFromSquare = KING_ATTACKS[sqFrom] & targetBitboard;
-        CreateMoves(typeOfMove, sqFrom, kingAttacksFromSquare, moveList);
+        CreateMove(typeOfMove, sqFrom, kingAttacksFromSquare, moveList);
     }
 }

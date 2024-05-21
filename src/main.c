@@ -1,14 +1,19 @@
 #include <stdio.h>
 
-#include "headers/fen_manager.h"
-#include "headers/position.h"
+#include "fen_manager.h"
+#include "position.h"
 #include "display.h"
 #include "movegen.h"
+#include "init.h"
+#include "magic_bitboards.h"
+
 int main()
 {
   printf("Molly v1.0\n");
   Position pos[1];
-  SetBoardFromFen("rnbqkbnr/pppppppp/8/8/4K3/8/PPPPPPPP/RNBQ1BNR w kq - 0 1", pos);
+  InitMagicsAll();
+  InitAll(pos);
+  SetBoardFromFen("rnbqkbnr/1pp1ppp1/p2p3p/8/3PP2P/8/PPP2PP1/RNBQKBNR w KQkq - 0 4", pos);
   DisplayBoard(pos);
 
   MoveList moveList[1];

@@ -1,7 +1,3 @@
-#include <assert.h>
-#include <ctype.h>
-#include <stdio.h>
-#include <string.h>
 #include "castling_permissions.h"
 #include "color.h"
 #include "direction.h"
@@ -10,6 +6,10 @@
 #include "position.h"
 #include "squares.h"
 #include "utilities.h"
+#include <assert.h>
+#include <ctype.h>
+#include <stdio.h>
+#include <string.h>
 
 // Set the board as per the pieces and update the pieces and occupancy_by_color bitboards better.
 void SetBoard(char *fen, Position *pos)

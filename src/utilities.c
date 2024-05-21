@@ -1,7 +1,6 @@
-#include "utilities.h"
-
-#include <stdint.h>
 #include "string.h"
+#include "utilities.h"
+#include <stdint.h>
 
 int indexOf(char *str, char c)
 {

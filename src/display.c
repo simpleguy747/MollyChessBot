@@ -1,10 +1,10 @@
-#include <stdio.h>
 #include "direction.h"
 #include "display.h"
+#include "movegen.h"
 #include "pieces.h"
 #include "position.h"
 #include "squares.h"
-#include "movegen.h"
+#include <stdio.h>
 
 // Display the board.
 void DisplayBoard(Position *pos)
