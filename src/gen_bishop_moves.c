@@ -14,6 +14,6 @@ void GenerateBishopAndQueenMoves(const int us, const Position *pos, MoveList *mo
     {
         int sqFrom = PopLSB(ourBishops);
         uint64_t bishopAttacksFromSquare = GenerateBishopAttacks(sqFrom, occupied) & targetBitboard;
-        CreateMove(NO_CAP, sqFrom, bishopAttacksFromSquare, moveList);
+        CreateMove(typeOfMove, sqFrom, bishopAttacksFromSquare, moveList);
     }
 }

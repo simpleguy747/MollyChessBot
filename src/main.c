@@ -6,6 +6,7 @@
 #include "movegen.h"
 #include "init.h"
 #include "magic_bitboards.h"
+#include "move_manager.h"
 
 int main()
 {
@@ -13,7 +14,7 @@ int main()
   Position pos[1];
   InitMagicsAll();
   InitAll(pos);
-  SetBoardFromFen("rnbqkbnr/1pp1ppp1/p2p3p/8/3PP2P/8/PPP2PP1/RNBQKBNR w KQkq - 0 4", pos);
+  SetBoardFromFen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1", pos);
   DisplayBoard(pos);
 
   MoveList moveList[1];
@@ -21,7 +22,9 @@ int main()
 
   for (int i = 0; i < moveList->count; i++)
   {
-    DisplayMove(moveList->moves[i].move);
+    int move = moveList->moves[i].move;
+    DisplayMove(move);
+    MakeMove(pos,move);
   }
 
   printf("Total moves : %d\n", moveList->count);

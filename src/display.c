@@ -36,16 +36,16 @@ void DisplayMove(int move)
 
     switch (typeOfMove)
     {
-    case PROMOTION_KNIGHT:
+    case MOVE_TYPE_PROMOTION_KNIGHT:
         promotionPiece = 'n';
         break;
-    case PROMOTION_BISHOP:
+    case MOVE_TYPE_PROMOTION_BISHOP:
         promotionPiece = 'b';
         break;
-    case PROMOTION_ROOK:
+    case MOVE_TYPE_PROMOTION_ROOK:
         promotionPiece = 'r';
         break;
-    case PROMOTION_QUEEN:
+    case MOVE_TYPE_PROMOTION_QUEEN:
         promotionPiece = 'q';
         break;
     }

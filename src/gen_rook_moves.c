@@ -14,6 +14,6 @@ void GenerateRookAndQueenMoves(const int us, const Position *pos, MoveList *move
     {
         int sqFrom = PopLSB(ourRooks);
         uint64_t rookAttacksFromSquare = GenerateRookAttacks(sqFrom, occupied) & targetBitboard;
-        CreateMove(NO_CAP, sqFrom, rookAttacksFromSquare, moveList);
+        CreateMove(typeOfMove, sqFrom, rookAttacksFromSquare, moveList);
     }
 }

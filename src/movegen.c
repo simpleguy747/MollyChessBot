@@ -22,8 +22,8 @@ void GenerateMoves(Position *pos, MoveList *moveList)
     const uint64_t notOurPieces = ~pos->occupancy_by_color[us];
     const uint64_t occupied = ~pos->type_of_pieces[EMPTY];
     GeneratePawnMoves(us, pos, moveList, emptyBitboard, enemyPiecesBitBoard, forwardDirection);
-    GenerateKnightMoves(us, pos, moveList, notOurPieces, NO_CAP);
-    GenerateKingNonCastleMoves(us, pos, moveList, notOurPieces, NO_CAP);
-    GenerateBishopAndQueenMoves(us, pos, moveList, notOurPieces,occupied, NO_CAP);
-    GenerateRookAndQueenMoves(us, pos, moveList, notOurPieces,occupied, NO_CAP);
+    GenerateKnightMoves(us, pos, moveList, notOurPieces, MOVE_TYPE_KNIGHT);
+    GenerateKingNonCastleMoves(us, pos, moveList, notOurPieces, MOVE_TYPE_KING);
+    GenerateBishopAndQueenMoves(us, pos, moveList, notOurPieces,occupied, MOVE_TYPE_BISHOP);
+    GenerateRookAndQueenMoves(us, pos, moveList, notOurPieces,occupied, MOVE_TYPE_ROOK);
 }

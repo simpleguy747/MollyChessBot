@@ -24,10 +24,10 @@ void CreatePromotionMoves(int offset, uint64_t movesBitBoard, MoveList *moveList
     {
         int sqTo = PopLSB(movesBitBoard);
         int sqFrom = sqTo + offset;
-        moveList->moves[moveList->count++].move = ENCODE_MOVE(PROMOTION_QUEEN, sqFrom, sqTo);
-        moveList->moves[moveList->count++].move = ENCODE_MOVE(PROMOTION_ROOK, sqFrom, sqTo);
-        moveList->moves[moveList->count++].move = ENCODE_MOVE(PROMOTION_BISHOP, sqFrom, sqTo);
-        moveList->moves[moveList->count++].move = ENCODE_MOVE(PROMOTION_KNIGHT, sqFrom, sqTo);
+        moveList->moves[moveList->count++].move = ENCODE_MOVE(MOVE_TYPE_PROMOTION_QUEEN, sqFrom, sqTo);
+        moveList->moves[moveList->count++].move = ENCODE_MOVE(MOVE_TYPE_PROMOTION_ROOK, sqFrom, sqTo);
+        moveList->moves[moveList->count++].move = ENCODE_MOVE(MOVE_TYPE_PROMOTION_BISHOP, sqFrom, sqTo);
+        moveList->moves[moveList->count++].move = ENCODE_MOVE(MOVE_TYPE_PROMOTION_KNIGHT, sqFrom, sqTo);
     }
 }
 
@@ -40,8 +40,8 @@ void GeneratePawnNonCapturePromoMoves(const int us, const Position *pos, MoveLis
     uint64_t ourPawnsDoublePush = SHIFT_UP(us, (ourPawnsNonPromoting & ColorWiseRanks[us][RANK_3]));
     // Single push to promotion
     uint64_t ourPawnsPromoting = SHIFT_UP(us, (ourPawns & ColorWiseRanks[us][RANK_7]));
-    CreatePawnMoves(NO_CAP, -forwardDirection, ourPawnsNonPromoting, moveList);
-    CreatePawnMoves(NO_CAP, -2 * forwardDirection, ourPawnsDoublePush, moveList);
+    CreatePawnMoves(MOVE_TYPE_PAWN, -forwardDirection, ourPawnsNonPromoting, moveList);
+    CreatePawnMoves(MOVE_TYPE_PAWN, -2 * forwardDirection, ourPawnsDoublePush, moveList);
     CreatePromotionMoves(-forwardDirection, ourPawnsPromoting, moveList);
 }
 
@@ -54,8 +54,8 @@ void GeneratePawnCapturesAndPromotions(const int us, const Position *pos, MoveLi
     uint64_t enpassantSquareBB = pos->enpassantSquare;
     uint64_t epCapture = (((ourPawns & ColorWiseEnpassantRanks[us][0]) << 7) >> (16 * us)) & enpassantSquareBB;
 
-    CreatePawnMoves(CAP, (-forwardDirection + 1), pawnCapturesNonPromoting, moveList);
-    CreatePawnMoves(ENPASSANT, (-forwardDirection + 1), epCapture, moveList);
+    CreatePawnMoves(MOVE_TYPE_PAWN, (-forwardDirection + 1), pawnCapturesNonPromoting, moveList);
+    CreatePawnMoves(MOVE_TYPE_ENPASSANT, (-forwardDirection + 1), epCapture, moveList);
     CreatePromotionMoves((-forwardDirection + 1), pawnCapturesPromoting, moveList);
 
     pawnCaptures = (((ourPawns & NOT_FILE_H_BB) << 9) >> (16 * us)) & targetBitboard;
@@ -63,8 +63,8 @@ void GeneratePawnCapturesAndPromotions(const int us, const Position *pos, MoveLi
     pawnCapturesNonPromoting = pawnCaptures & ~pawnCapturesPromoting;
     epCapture = (((ourPawns & ColorWiseEnpassantRanks[us][1]) << 9) >> (16 * us)) & enpassantSquareBB;
 
-    CreatePawnMoves(CAP, (-forwardDirection - 1), pawnCapturesNonPromoting, moveList);
-    CreatePawnMoves(ENPASSANT, (-forwardDirection - 1), epCapture, moveList);
+    CreatePawnMoves(MOVE_TYPE_PAWN, (-forwardDirection - 1), pawnCapturesNonPromoting, moveList);
+    CreatePawnMoves(MOVE_TYPE_ENPASSANT, (-forwardDirection - 1), epCapture, moveList);
     CreatePromotionMoves((-forwardDirection - 1), pawnCapturesPromoting, moveList);
 }
 
