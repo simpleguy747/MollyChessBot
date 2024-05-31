@@ -14,8 +14,7 @@ DEBUGFLAGS := -g
 RELEASEFLAGS := -O2
 
 # Source files
-SRCS := $(wildcard $(SRCDIR)/*.c)
-
+SRCS := $(shell find $(SRCDIR) -name '*.c')
 # Executable name
 EXEC := hanselbot
 
@@ -28,6 +27,9 @@ debug-exe: clean debug execute
 
 execute:
 	$(DEBUGDIR)/$(EXEC)
+
+execute-release:
+	$(RELEASEDIR)/$(EXEC)
 
 debug: $(DEBUGDIR)/$(EXEC)
 

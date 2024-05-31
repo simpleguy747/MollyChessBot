@@ -28,3 +28,4 @@ inline int PopLSB(uint64_t bb)
 {
     return __builtin_ctzll(bb);
 }
+

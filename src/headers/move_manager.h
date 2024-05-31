@@ -7,11 +7,11 @@ void MakeMove(Position *pos, int move);
 
 // preserve board state
 #define copy_board()           \
-    Position position_copy[1]; \
-    memcpy(position_copy, position, sizeof(Position));
+    Position pos_copy[1]; \
+    memcpy(pos_copy, pos, sizeof(Position));
 
 // restore board state
 #define take_back() \
-    memcpy(position, position_copy, sizeof(Position));
+    memcpy(pos, pos_copy, sizeof(Position));
     
 #endif

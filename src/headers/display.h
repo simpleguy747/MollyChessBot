@@ -4,5 +4,5 @@
 #include "position.h"
 void DisplayBoard(Position *pos);
 void DisplayMove(int move);
-
+void DisplayMoveAndNodes(int move, uint64_t nodes);
 #endif

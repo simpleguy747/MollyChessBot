@@ -35,11 +35,11 @@ void GeneratePawnNonCapturePromoMoves(const int us, const Position *pos, MoveLis
 {
     uint64_t ourPawns = pos->type_of_pieces[PAWN] & pos->occupancy_by_color[us];
     // Single push for pawns not on 7th-rank.
-    uint64_t ourPawnsNonPromoting = SHIFT_UP(us, (ourPawns & ~ColorWiseRanks[us][RANK_7]));
+    uint64_t ourPawnsNonPromoting = SHIFT_UP(us, (ourPawns & ~ColorWiseRanks[us][RANK_7])) & targetBitboard;
     // Double push the pawns from starting rank.
-    uint64_t ourPawnsDoublePush = SHIFT_UP(us, (ourPawnsNonPromoting & ColorWiseRanks[us][RANK_3]));
+    uint64_t ourPawnsDoublePush = SHIFT_UP(us, (ourPawnsNonPromoting & ColorWiseRanks[us][RANK_3])) & targetBitboard;
     // Single push to promotion
-    uint64_t ourPawnsPromoting = SHIFT_UP(us, (ourPawns & ColorWiseRanks[us][RANK_7]));
+    uint64_t ourPawnsPromoting = SHIFT_UP(us, (ourPawns & ColorWiseRanks[us][RANK_7]))& targetBitboard;
     CreatePawnMoves(MOVE_TYPE_PAWN, -forwardDirection, ourPawnsNonPromoting, moveList);
     CreatePawnMoves(MOVE_TYPE_PAWN, -2 * forwardDirection, ourPawnsDoublePush, moveList);
     CreatePromotionMoves(-forwardDirection, ourPawnsPromoting, moveList);
