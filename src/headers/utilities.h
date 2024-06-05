@@ -5,8 +5,7 @@
 
 int indexOf(char *str, char c);
 void FindNextSpace(char *fen, char **ptr);
-int PopLSB(uint64_t bb);
-
+#define PopLSB(bb) __builtin_ctzll(bb)
 #define GetRankFromSquare(sq) (sq) >> 3
 #define GetFileFromSquare(sq) (sq) & 7
 

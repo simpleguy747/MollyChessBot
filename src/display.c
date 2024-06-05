@@ -9,12 +9,12 @@
 // Display the board.
 void DisplayBoard(Position *pos)
 {
-    for (int r = 7; r >= 0; r--)
+    for (char r = 7; r >= 0; r--)
     {
-        for (int c = 0; c <= 7; c++)
+        for (char c = 0; c <= 7; c++)
         {
             int sq = 8 * r + c;
-            printf(" %c ", PIECES_STR[pos->board[sq]]);
+            printf(" %c ", PIECES_STR[(int)pos->board[sq]]);
         }
         printf("\n");
     }

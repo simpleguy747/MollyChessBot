@@ -7,7 +7,7 @@ typedef struct Position
 {
     uint64_t type_of_pieces[7];
     uint64_t occupancy_by_color[2];
-    int board[64];
+    char board[64];
     int sideToMove;
     int castling;
     uint64_t enpassantSquare;

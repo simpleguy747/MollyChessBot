@@ -24,8 +24,8 @@ void FindNextSpace(char *fen, char **ptr)
     *ptr = (*fen == ' ') ? fen + 1 : NULL;
 }
 
-inline int PopLSB(uint64_t bb)
-{
-    return __builtin_ctzll(bb);
-}
+// inline int PopLSB(uint64_t bb)
+// {
+//     return __builtin_ctzll(bb);
+// }
 

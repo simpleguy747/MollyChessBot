@@ -9,14 +9,14 @@ DEBUGDIR := $(BUILDDIR)/debug
 RELEASEDIR := $(BUILDDIR)/release
 
 # Flags
-CFLAGS := -Wall -I$(INCDIR)
+CFLAGS := -Wall -I $(INCDIR)
 DEBUGFLAGS := -g
-RELEASEFLAGS := -O2
+RELEASEFLAGS := -O3
 
 # Source files
 SRCS := $(shell find $(SRCDIR) -name '*.c')
 # Executable name
-EXEC := hanselbot
+EXEC := mollybot
 
 # Targets
 .PHONY: all clean

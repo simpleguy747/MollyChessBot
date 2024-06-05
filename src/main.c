@@ -32,13 +32,13 @@ int main()
 
   // printf("Total moves : %d\n", moveList->count);
 
-  // PerftNumbers("3rk2r/p4pQ1/3p2pb/1pp3P1/P2p4/2n2R1b/1PKN3P/2B4R w k - 0 1", 6,1017748582,1);
+   PerftNumbers("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1", 6,119060324,1);
   //  PerftNumbers("3rk2r/p4pQ1/3p2pb/1pp3P1/P2p4/2n4R/1PKN3P/2B4R b k - 0 1", 5,1017748582,1);
   // PerftNumbers("3rk2r/p4pb1/3p2p1/1pp3P1/P2p4/2n4R/1PKN3P/2B4R w k - 0 2", 4, 1017748582, 1);
   //  PerftNumbers("3rk2R/p4pb1/3p2p1/1pp3P1/P2p4/2n5/1PKN3P/2B4R b - - 0 2", 3,1017748582,1);
   //  PerftNumbers("3rk2r/p4pQ1/3p2pb/1pp3P1/P2p4/2n2R1b/1PKN3P/2B4R w k - 0 1", 6,1017748582,1);
 
-  TestPerft();
+  //TestPerft();
 
   return 0;
 }
