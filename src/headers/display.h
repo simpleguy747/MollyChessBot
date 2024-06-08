@@ -5,4 +5,5 @@
 void DisplayBoard(Position *pos);
 void DisplayMove(int move);
 void DisplayMoveAndNodes(int move, uint64_t nodes);
+void MoveStrFromInt(int move, char *s);
 #endif

@@ -3,7 +3,7 @@
 
 #include "position.h"
 
-int RootSearch(Position *pos, int depth);
+void RootSearch(Position *pos, int depth);
 
 #define INF 100000
 #define ALPHA -INF

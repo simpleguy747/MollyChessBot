@@ -5,6 +5,7 @@
 #include "position.h"
 #include "squares.h"
 #include <stdio.h>
+#include "string.h"
 
 // Display the board.
 void DisplayBoard(Position *pos)
@@ -20,7 +21,7 @@ void DisplayBoard(Position *pos)
     }
 }
 
-void DisplayMove(int move)
+void MoveStrFromInt(int move, char *s)
 {
     int toSq = SQ_TO(move);
     int fromSq = SQ_FROM(move);
@@ -50,9 +51,19 @@ void DisplayMove(int move)
         break;
     }
 
-    printf("%c%c%c%c%c\n", FILES_STR[fromSq_file], RANKS_STR[fromSq_rank], FILES_STR[toSq_file], RANKS_STR[toSq_rank], promotionPiece);
+    s[0] = FILES_STR[fromSq_file];
+    s[1] = RANKS_STR[fromSq_rank];
+    s[2] = FILES_STR[toSq_file];
+    s[3] = RANKS_STR[toSq_rank];
+    s[4] = promotionPiece;
 }
 
+void DisplayMove(int move)
+{
+    char s[5];
+    MoveStrFromInt(move, s);
+    printf("%s\n", s);
+}
 
 void DisplayMoveAndNodes(int move, uint64_t nodes)
 {
@@ -84,5 +95,5 @@ void DisplayMoveAndNodes(int move, uint64_t nodes)
         break;
     }
 
-    printf("%c%c%c%c%c% ld\n", FILES_STR[fromSq_file], RANKS_STR[fromSq_rank], FILES_STR[toSq_file], RANKS_STR[toSq_rank], promotionPiece,nodes);
+    printf("%c%c%c%c%c% ld\n", FILES_STR[fromSq_file], RANKS_STR[fromSq_rank], FILES_STR[toSq_file], RANKS_STR[toSq_rank], promotionPiece, nodes);
 }

@@ -44,14 +44,13 @@ int Search(Position *pos, int depth, int ply)
 
     return max;
 }
-int RootSearch(Position *pos, int depth)
+void RootSearch(Position *pos, int depth)
 {
     int max = -INF;
     int eval = max;
     int bestMove = -1;
     int ply = 0;
     MoveList moveList[1];
-    char movePlayed = 0;
     GenerateMoves(pos, moveList);
     for (int i = 0; i < moveList->count; i++)
     {
@@ -60,7 +59,6 @@ int RootSearch(Position *pos, int depth)
         if (!IsCheck(pos))
         {
             pos->sideToMove ^= 1;
-            movePlayed = 1;
             eval = -Search(pos, depth - 1, ply + 1);
         }
         take_back();
@@ -72,12 +70,8 @@ int RootSearch(Position *pos, int depth)
         }
     }
 
-    DisplayMove(bestMove);
-    printf("eval %d\n", max);
-    if (movePlayed == 0)
-    {
-        return IsCheck(pos) ? (-MATE_VAL) : 0;
-    }
-
-    return max;
+    char bestMoveStr[5];
+    MoveStrFromInt(bestMove, bestMoveStr);
+    printf("bestmove %s\n", bestMoveStr);
+    
 }
