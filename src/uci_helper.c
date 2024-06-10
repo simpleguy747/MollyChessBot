@@ -8,6 +8,10 @@
 #include "init.h"
 #include "magic_bitboards.h"
 #include "display.h"
+#include "utilities.h"
+#include "movegen.h"
+#include "move_manager.h"
+#include "assert.h"
 
 // UCI Helper Class Structure
 typedef struct
@@ -66,53 +70,74 @@ void ucinewgame()
 {
     InitAll(pos);
     // Initialize new game settings here
-    
 }
 
 // Handle the 'position' command
 void position(char *command)
 {
-    char *cmd = strtok(command, " ");
-    cmd = strtok(NULL, " ");
-    cmd[strcspn(cmd, "\n")] = '\0';
+    command += 9; // Skip "position "
 
-    if (strcmp(cmd, "startpos") == 0)
+    if (strncmp(command, "startpos", 8) == 0)
     {
-        SetBoardFromFen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1", pos);
-        cmd = strtok(NULL, " ");
-        if (cmd && strcmp(cmd, "moves") == 0)
+        SetBoardFromFen(START_POSITION, pos);
+        command += 9; // Move past "startpos "
+    }
+    else
+    {
+        char *fen = strstr(command, "fen ");
+        if (fen)
         {
-            char *moves = strtok(NULL, "");
+            fen += 4; // Move past "fen "
+            char *moves = strstr(fen, " moves");
             if (moves)
             {
-                // applyMoves(moves);
+                *moves = '\0'; // Terminate FEN string
+                moves += 7;    // Move past " moves "
             }
+            SetBoardFromFen(fen, pos);
+            command = moves;
+        }
+        else
+        {
+            // Handle error case: no "fen" or "startpos" found
+            return;
         }
     }
-    else if (strcmp(cmd, "fen") == 0)
+
+    // Process moves if any
+    if (command)
     {
-        char *fen = strtok(NULL, "");
-        char *moves = strstr(fen, " moves");
-        if (moves)
+
+        command[strcspn(command, "\n")] = '\0';
+        char *moveStr = strtok(command, " ");
+
+        while (moveStr != NULL)
         {
-            *moves = '\0'; // Terminate FEN string
-            moves += 6;    // Move past " moves"
-        }
-        SetBoardFromFen(fen, pos);
-        if (moves)
-        {
-            // applyMoves(moves);
+            // Replace with actual function to convert moveStr to move
+            int moveInt = MoveIntFromStr(moveStr);
+            MoveList moveList;
+            GenerateMoves(pos, &moveList);
+            int moveMade = 0;
+            for (int index = 0; index < moveList.count; index++)
+            {
+                if ((moveList.moves[index].move & 0xfff) == moveInt)
+                {
+                    MakeMove(pos, moveList.moves[index].move);
+                    pos->sideToMove ^= 1;
+                    moveMade = 1;
+                    break;
+                }
+            }
+            assert(moveMade != 0);
+            moveStr = strtok(NULL, " ");
         }
     }
 }
+
 // Handle the 'go' command
 void go(char *command)
 {
-    // Start the engine's thinking process
-    // RootSearch()
-    // Example move (replace with actual move generation)
-    // DisplayBoard(pos);
-    RootSearch(pos,4);
+    RootSearch(pos, 4);
     fflush(stdout);
 }
 

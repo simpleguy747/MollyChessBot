@@ -44,6 +44,7 @@ int Search(Position *pos, int depth, int ply)
 
     return max;
 }
+
 void RootSearch(Position *pos, int depth)
 {
     int max = -INF;
@@ -73,5 +74,4 @@ void RootSearch(Position *pos, int depth)
     char bestMoveStr[5];
     MoveStrFromInt(bestMove, bestMoveStr);
     printf("bestmove %s\n", bestMoveStr);
-    
 }

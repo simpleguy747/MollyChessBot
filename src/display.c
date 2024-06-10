@@ -6,7 +6,7 @@
 #include "squares.h"
 #include <stdio.h>
 #include "string.h"
-
+#include "gen_moves_base.h"
 // Display the board.
 void DisplayBoard(Position *pos)
 {
@@ -58,6 +58,13 @@ void MoveStrFromInt(int move, char *s)
     s[4] = promotionPiece;
 }
 
+int MoveIntFromStr(char *s)
+{
+    int fromSq = (s[0] - 'a') + 8 * (s[1] - '1');
+    int toSq = (s[2] - 'a') + 8 * (s[3] - '1');
+    int move = ENCODE_MOVE(0, fromSq, toSq);
+    return move;
+}
 void DisplayMove(int move)
 {
     char s[5];

@@ -42,4 +42,5 @@ typedef struct MoveList
 #define MOVE_TYPE_PROMOTION_ROOK 11
 #define MOVE_TYPE_PROMOTION_QUEEN 12
 
+#define START_POSITION "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
 #endif
