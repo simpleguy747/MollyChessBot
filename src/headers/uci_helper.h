@@ -12,4 +12,14 @@ void stop();
 void quit();
 void parseCommand(char *command);
 
+typedef struct UCIHelper
+{
+    // Add any necessary fields here
+    int wtime;
+    int btime;
+    int winc;
+    int binc;
+
+} UCIHelper;
+
 #endif

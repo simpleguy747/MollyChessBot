@@ -13,12 +13,6 @@
 #include "move_manager.h"
 #include "assert.h"
 
-// UCI Helper Class Structure
-typedef struct
-{
-    // Add any necessary fields here
-} UCIHelper;
-
 Position pos[1];
 // Main function
 int UciLoop()
@@ -80,7 +74,17 @@ void position(char *command)
     if (strncmp(command, "startpos", 8) == 0)
     {
         SetBoardFromFen(START_POSITION, pos);
-        command += 9; // Move past "startpos "
+        command += 8; // Move past "startpos"
+
+        if (*command == ' ')
+        {
+            command++; // Move past the space after "startpos"
+        }
+
+        if (strncmp(command, "moves", 5) == 0)
+        {
+            command += 6; // Move past "moves "
+        }
     }
     else
     {
@@ -137,7 +141,38 @@ void position(char *command)
 // Handle the 'go' command
 void go(char *command)
 {
-    RootSearch(pos, 4);
+    UCIHelper uciHelper;
+    const char *delimiters = " \t\n";
+    char *token = strtok(command, delimiters);
+    // Loop through the tokens
+    while (token != NULL)
+    {
+        if (strcmp(token, "wtime") == 0)
+        {
+            token = strtok(NULL, delimiters);
+            uciHelper.wtime = atoi(token);
+        }
+        if (strcmp(token, "btime") == 0)
+        {
+            token = strtok(NULL, delimiters);
+            uciHelper.btime = atoi(token);
+        }
+        if (strcmp(token, "winc") == 0)
+        {
+            token = strtok(NULL, delimiters);
+            uciHelper.winc = atoi(token);
+        }
+        if (strcmp(token, "binc") == 0)
+        {
+            token = strtok(NULL, delimiters);
+            uciHelper.binc = atoi(token);
+        }
+
+        token = strtok(NULL, delimiters);
+    }
+
+    // printf("wtime%d,btime:%d,winc:%d,binc:%d\n", uciHelper.wtime, uciHelper.btime, uciHelper.winc, uciHelper.binc);
+    RootSearch(&uciHelper, pos, 4);
     fflush(stdout);
 }
 

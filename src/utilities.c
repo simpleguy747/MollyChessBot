@@ -1,6 +1,7 @@
 #include "string.h"
 #include "utilities.h"
 #include <stdint.h>
+#include <sys/time.h>
 
 int indexOf(char *str, char c)
 {
@@ -24,8 +25,11 @@ void FindNextSpace(char *fen, char **ptr)
     *ptr = (*fen == ' ') ? fen + 1 : NULL;
 }
 
-// inline int PopLSB(uint64_t bb)
-// {
-//     return __builtin_ctzll(bb);
-// }
+long long GetCurrentTimeInMilliseconds()
+{
+  struct timeval currentTime;
+  gettimeofday(&currentTime, NULL);
+  return currentTime.tv_sec * 1000LL + currentTime.tv_usec / 1000LL;
+}
+
 
