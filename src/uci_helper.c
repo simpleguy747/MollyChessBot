@@ -17,7 +17,7 @@ Position pos[1];
 // Main function
 int UciLoop()
 {
-    char command[256];
+    char command[1024];
     InitMagicsAll();
 
     // Main loop to read commands
@@ -132,6 +132,9 @@ void position(char *command)
                     break;
                 }
             }
+            // printf("\n**post** - %s\n",moveStr);
+            // DisplayBoard(pos);
+            // printf("\n");
             assert(moveMade != 0);
             moveStr = strtok(NULL, " ");
         }

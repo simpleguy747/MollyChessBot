@@ -56,6 +56,7 @@ void MoveStrFromInt(int move, char *s)
     s[2] = FILES_STR[toSq_file];
     s[3] = RANKS_STR[toSq_rank];
     s[4] = promotionPiece;
+    s[5]='\0';
 }
 
 int MoveIntFromStr(char *s)
@@ -67,7 +68,7 @@ int MoveIntFromStr(char *s)
 }
 void DisplayMove(int move)
 {
-    char s[5];
+    char s[6];
     MoveStrFromInt(move, s);
     printf("%s\n", s);
 }

@@ -94,6 +94,7 @@ void MakeMove(Position *pos, int move)
     case MOVE_TYPE_ENPASSANT:
         pos->type_of_pieces[PAWN] ^= sq_from_bb | sq_to_bb | ((sq_to_bb >> 8) << (16 * us));
         pos->occupancy_by_color[enemy] &= ~((sq_to_bb >> 8) << (16 * us));
+        pos->board[sq_from] = EMPTY;
         pos->board[sq_to] = MAKE_PIECE(PAWN, us);
         int ep_pawn_sq = (sq_to - 8) + (16 * us);
         pos->board[ep_pawn_sq] = EMPTY;
