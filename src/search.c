@@ -93,11 +93,73 @@ int Negamax(Position *pos, int depth, int ply, LINE *pline)
     return max;
 }
 
+int NegamaxAlphaBeta(Position *pos, int depth, int ply, int alpha, int beta, LINE *pline)
+{
+    // DisplayBoard(pos);
+    LINE line;
+    CheckIfTimeOver();
+    if (stop_search)
+    {
+        pline->cmove = 0;
+        return Evaluate(pos);
+    }
+    if (depth == 0)
+    {
+        pline->cmove = 0;
+        return Evaluate(pos);
+    }
+    nodes = nodes + 1;
+    MoveList moveList[1];
+    char movePlayed = 0;
+    int eval;
+    GenerateMoves(pos, moveList);
+    for (int i = 0; i < moveList->count; i++)
+    {
+        copy_board();
+        MakeMove(pos, moveList->moves[i].move);
+        // DisplayMove( moveList->moves[i].move);
+        if (!IsCheck(pos))
+        {
+            pos->sideToMove ^= 1;
+            movePlayed = 1;
+            eval = -NegamaxAlphaBeta(pos, depth - 1, ply + 1, -beta, -alpha, &line);
+            if (eval > alpha)
+            {
+                if (eval >= beta)
+                    return beta;
+                alpha = eval;
+
+                if (ply == 0)
+                {
+                    if (!stop_search)
+                        best_move = moveList->moves[i].move;
+                }
+                pline->argmove[0] = moveList->moves[i].move;
+                memcpy(pline->argmove + 1, line.argmove, line.cmove * sizeof(int));
+                pline->cmove = line.cmove + 1;
+            }
+        }
+        take_back();
+        if (stop_search)
+        {
+            break;
+        }
+    }
+
+    if (movePlayed == 0)
+    {
+        pline->cmove = 0;
+        return IsCheck(pos) ? (-MATE_VAL + ply) : 0;
+    }
+
+    return alpha;
+}
+
 void RootSearch(UCIHelper *uciHelper, Position *pos, int depth)
 {
     int ply = 0;
     nodes = 0;
-    int maxDepth = 10;
+    int maxDepth = 100;
 
     int time = uciHelper->btime;
     int inc = uciHelper->binc;
@@ -121,7 +183,8 @@ void RootSearch(UCIHelper *uciHelper, Position *pos, int depth)
         pvLine.cmove = 0;
 
         long long t_start = GetCurrentTimeInMilliseconds();
-        int eval = Negamax(pos, d, ply, &pvLine);
+        int eval = NegamaxAlphaBeta(pos, d, ply, -INF, INF, &pvLine);
+        //int eval = Negamax(pos, d, ply, &pvLine);
         long long t_end = GetCurrentTimeInMilliseconds();
         if (!stop_search)
         {

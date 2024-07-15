@@ -63,7 +63,20 @@ int MoveIntFromStr(char *s)
 {
     int fromSq = (s[0] - 'a') + 8 * (s[1] - '1');
     int toSq = (s[2] - 'a') + 8 * (s[3] - '1');
-    int move = ENCODE_MOVE(0, fromSq, toSq);
+    int move_type = 0;
+    if(s[4]=='n'){
+        move_type = MOVE_TYPE_PROMOTION_KNIGHT;
+    }
+    else if(s[4]=='b'){
+        move_type = MOVE_TYPE_PROMOTION_BISHOP;
+    }
+    else if(s[4]=='r'){
+        move_type = MOVE_TYPE_PROMOTION_ROOK;
+    }
+    else if(s[4]=='q'){
+        move_type = MOVE_TYPE_PROMOTION_QUEEN;
+    }
+    int move = ENCODE_MOVE(move_type, fromSq, toSq);
     return move;
 }
 void DisplayMove(int move)

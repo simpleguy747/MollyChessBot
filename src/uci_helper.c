@@ -111,7 +111,6 @@ void position(char *command)
     // Process moves if any
     if (command)
     {
-
         command[strcspn(command, "\n")] = '\0';
         char *moveStr = strtok(command, " ");
 
@@ -124,7 +123,16 @@ void position(char *command)
             int moveMade = 0;
             for (int index = 0; index < moveList.count; index++)
             {
-                if ((moveList.moves[index].move & 0xfff) == moveInt)
+                if(moveStr[4]!='\0'){
+                    if ((moveList.moves[index].move) == moveInt)
+                {
+                    MakeMove(pos, moveList.moves[index].move);
+                    pos->sideToMove ^= 1;
+                    moveMade = 1;
+                    break;
+                }
+                }
+                else if ((moveList.moves[index].move & 0xfff) == moveInt)
                 {
                     MakeMove(pos, moveList.moves[index].move);
                     pos->sideToMove ^= 1;
