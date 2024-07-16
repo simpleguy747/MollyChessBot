@@ -23,17 +23,17 @@ const uint64_t KING_ATTACKS[64] = {
     0x0203000000000000ULL, 0x0507000000000000ULL, 0x0A0E000000000000ULL, 0x141C000000000000ULL, 0x2838000000000000ULL, 0x5070000000000000ULL, 0xA0E0000000000000ULL, 0x40C0000000000000ULL};
 
 
-uint64_t GenerateBishopAttacks(int sqFrom, uint64_t occupied)
+uint64_t generate_bishop_attacks(int sqFrom, uint64_t occupied)
 {
-    Magic *bishopMagic = &BishopMagics[sqFrom];
+    Magic *bishopMagic = &Bishop_Magics[sqFrom];
     int index = (((occupied & bishopMagic->mask) * bishopMagic->magic) >> bishopMagic->shift);
 
     return bishopMagic->attacks[index];
 }
 
-uint64_t GenerateRookAttacks(int sqFrom, uint64_t occupied)
+uint64_t generate_rook_attacks(int sqFrom, uint64_t occupied)
 {
-    Magic *rookMagic = &RookMagics[sqFrom];
+    Magic *rookMagic = &Rook_Magics[sqFrom];
     int index = (((occupied & rookMagic->mask) * rookMagic->magic) >> rookMagic->shift);
 
     return rookMagic->attacks[index];

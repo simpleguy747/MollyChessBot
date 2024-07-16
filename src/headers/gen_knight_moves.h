@@ -3,6 +3,6 @@
 
 #include "position.h"
 #include <stdint.h>
-void GenerateKnightMoves(const int us, const Position *pos, MoveList *moveList, const uint64_t targetBitboard, int typeOfMove);
+void generate_knight_moves(const int us, const Position *pos, MoveList *moveList, const uint64_t targetBitboard, int typeOfMove);
 
 #endif

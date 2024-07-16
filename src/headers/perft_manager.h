@@ -3,6 +3,6 @@
 #include <stdint.h>
 #include "position.h"
 
-uint64_t Perft(Position *pos, int depth, int ply);
-void PerftNumbers(char *fen, int depth, uint64_t expected_nodes, int index);
+uint64_t perft(Position *pos, int depth, int ply);
+void perft_numbers(char *fen, int depth, uint64_t expected_nodes, int index);
 #endif

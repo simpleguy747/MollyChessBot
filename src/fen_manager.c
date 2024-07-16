@@ -30,7 +30,7 @@ void SetBoard(char *fen, Position *pos)
         else
         {
             // Parse piece
-            int piece = indexOf(PIECES_STR, *ptr);
+            int piece = index_of(PIECES_STR, *ptr);
             pos->board[sq] = piece;
             sq++;
         }
@@ -82,7 +82,7 @@ void ClearBoard(Position *pos)
 void SetSideToMove(char *fen, Position *pos)
 {
     char *ptr = fen;
-    FindNextSpace(ptr, &ptr);
+    find_next_space(ptr, &ptr);
     pos->sideToMove = (*ptr == 'w') ? COLOR_WHITE : COLOR_BLACK;
 }
 
@@ -92,7 +92,7 @@ void SetCastlingRights(char *fen, Position *pos)
     char *ptr = fen;
     for (int i = 0; i < 2; i++)
     {
-        FindNextSpace(ptr, &ptr);
+        find_next_space(ptr, &ptr);
     }
 
     // Parse castling rights
@@ -130,7 +130,7 @@ void SetEnPassantSquare(char *fen, Position *pos)
     char *ptr = fen;
     for (int i = 0; i < 3; i++)
     {
-        FindNextSpace(ptr, &ptr);
+        find_next_space(ptr, &ptr);
     }
     // Parse en passant square
     if (*ptr != '-')
@@ -153,7 +153,7 @@ void SetHalfMoveNumber(char *fen, Position *pos)
     char *ptr = fen;
     for (int i = 0; i < 4; i++)
     {
-        FindNextSpace(ptr, &ptr);
+        find_next_space(ptr, &ptr);
     }
     // Parse halfmove clock
     pos->halfMoves = 0;
@@ -178,7 +178,7 @@ void SetFullMoveNumber(char *fen, Position *pos)
 
     for (int i = 0; i < 5; i++)
     {
-        FindNextSpace(ptr, &ptr);
+        find_next_space(ptr, &ptr);
     }
     // Parse fullmove number
     pos->fullMoves = 0;
@@ -197,7 +197,7 @@ void SetFullMoveNumber(char *fen, Position *pos)
 }
 
 // Method to set the state of the position as per fen.
-void SetBoardFromFen(char *fen, Position *pos)
+void set_board_from_fen(char *fen, Position *pos)
 {
     ClearBoard(pos);
     SetBoard(fen, pos);

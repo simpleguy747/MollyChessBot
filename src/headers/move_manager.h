@@ -3,7 +3,7 @@
 
 #include "position.h"
 
-void MakeMove(Position *pos, int move);
+void make_move(Position *pos, int move);
 
 // preserve board state
 #define copy_board()           \

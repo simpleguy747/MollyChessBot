@@ -4,7 +4,7 @@
 #include "position.h"
 #include "uci_helper.h"
 
-void RootSearch(UCIHelper *uciHelper, Position *pos, int depth);
+void root_search(UCIHelper *uciHelper, Position *pos, int depth);
 
 #define INF 100000
 #define ALPHA -INF

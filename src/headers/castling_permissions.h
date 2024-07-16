@@ -9,14 +9,13 @@
 #define BLACK_KINGSIDE_CASTLE 4
 #define BLACK_QUEENSIDE_CASTLE 8
 
-extern const int CastleRightsConsts[64];
+extern const int Castle_Rights_Consts[64];
 extern const uint64_t Castled_Rook_Files[2][2];
 extern const int Castled_Rook_Squares[2][4];
-extern const uint64_t CastleJump[2][2];
+extern const uint64_t Castle_Jump[2][2];
 
 extern const uint64_t CastleBits[2][2];
-extern const uint64_t CastleJump[2][2];
-extern const int CastleJumpSquares[2][4];
-extern const int CastleSquares[2][4];
+extern const int Castle_Jump_Squares[2][4];
+extern const int Castle_Squares[2][4];
 
 #endif

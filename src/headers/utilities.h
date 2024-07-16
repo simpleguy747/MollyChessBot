@@ -3,9 +3,9 @@
 
 #include <stdint.h>
 
-int indexOf(char *str, char c);
-void FindNextSpace(char *fen, char **ptr);
-long long GetCurrentTimeInMilliseconds();
+int index_of(char *str, char c);
+void find_next_space(char *fen, char **ptr);
+long long get_current_time_in_milliseconds();
 
 #define PopLSB(bb) __builtin_ctzll(bb)
 #define GetRankFromSquare(sq) (sq) >> 3

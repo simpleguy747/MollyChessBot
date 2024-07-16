@@ -12,12 +12,12 @@ typedef struct Magic
 
 } Magic;
 
-extern Magic RookMagics[64];
-extern Magic BishopMagics[64];
+extern Magic Rook_Magics[64];
+extern Magic Bishop_Magics[64];
 
-extern uint64_t RookTable[0x19000];  // To store rook attacks
-extern uint64_t BishopTable[0x1480]; // To store bishop attacks
+extern uint64_t Rook_Table[0x19000];  // To store rook attacks
+extern uint64_t Bishop_Table[0x1480]; // To store bishop attacks
 
-void InitMagicsAll();
+void init_magics_all();
 
 #endif

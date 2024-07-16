@@ -3,7 +3,7 @@
 #include <stdint.h>
 #include <sys/time.h>
 
-int indexOf(char *str, char c)
+int index_of(char *str, char c)
 {
     int string_length = strlen(str);
     for (int index = 0; index < string_length; index++)
@@ -16,7 +16,7 @@ int indexOf(char *str, char c)
     return -1;
 }
 
-void FindNextSpace(char *fen, char **ptr)
+void find_next_space(char *fen, char **ptr)
 {
     while (*fen && *fen != ' ')
     {
@@ -25,7 +25,7 @@ void FindNextSpace(char *fen, char **ptr)
     *ptr = (*fen == ' ') ? fen + 1 : NULL;
 }
 
-long long GetCurrentTimeInMilliseconds()
+long long get_current_time_in_milliseconds()
 {
   struct timeval currentTime;
   gettimeofday(&currentTime, NULL);

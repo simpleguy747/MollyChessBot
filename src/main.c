@@ -14,7 +14,7 @@
 #include "uci_helper.h"
 int main()
 {
-  UciLoop();
-  // PerftNumbers("r2qkb1r/pp2nppp/3p4/2pNN1B1/2BnP3/3P4/PPP2PPP/R2bK2R w KQkq - 1 1",6,500,1);
+  uci_loop();
+  // perft_numbers("r2qkb1r/pp2nppp/3p4/2pNN1B1/2BnP3/3P4/PPP2PPP/R2bK2R w KQkq - 1 1",6,500,1);
   return 0;
 }

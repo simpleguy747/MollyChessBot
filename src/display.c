@@ -8,7 +8,7 @@
 #include "string.h"
 #include "gen_moves_base.h"
 // Display the board.
-void DisplayBoard(Position *pos)
+void display_board(Position *pos)
 {
     for (char r = 7; r >= 0; r--)
     {
@@ -21,7 +21,7 @@ void DisplayBoard(Position *pos)
     }
 }
 
-void MoveStrFromInt(int move, char *s)
+void move_str_from_int(int move, char *s)
 {
     int toSq = SQ_TO(move);
     int fromSq = SQ_FROM(move);
@@ -59,7 +59,7 @@ void MoveStrFromInt(int move, char *s)
     s[5]='\0';
 }
 
-int MoveIntFromStr(char *s)
+int move_int_from_str(char *s)
 {
     int fromSq = (s[0] - 'a') + 8 * (s[1] - '1');
     int toSq = (s[2] - 'a') + 8 * (s[3] - '1');
@@ -79,14 +79,14 @@ int MoveIntFromStr(char *s)
     int move = ENCODE_MOVE(move_type, fromSq, toSq);
     return move;
 }
-void DisplayMove(int move)
+void display_move(int move)
 {
     char s[6];
-    MoveStrFromInt(move, s);
+    move_str_from_int(move, s);
     printf("%s\n", s);
 }
 
-void DisplayMoveAndNodes(int move, uint64_t nodes)
+void display_move_and_nodes(int move, uint64_t nodes)
 {
     int toSq = SQ_TO(move);
     int fromSq = SQ_FROM(move);

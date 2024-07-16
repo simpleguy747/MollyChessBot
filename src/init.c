@@ -3,7 +3,7 @@
 #include "stdint.h"
 #include "string.h"
 
-void InitAll(Position *position)
+void init_all(Position *position)
 {
     memset(position->board, 0, 64 * sizeof(char));
     memset(position->type_of_pieces, 0, 7 * sizeof(uint64_t));

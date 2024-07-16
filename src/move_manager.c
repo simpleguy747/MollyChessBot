@@ -4,7 +4,7 @@
 #include "pieces.h"
 #include "castling_permissions.h"
 
-void MakeMove(Position *pos, int move)
+void make_move(Position *pos, int move)
 {
     const int sq_from = (SQ_FROM(move));
     const int sq_to = (SQ_TO(move));
@@ -20,7 +20,7 @@ void MakeMove(Position *pos, int move)
 
     pos->enpassantSquare = EMPTY;
     pos->type_of_pieces[TYPE_OF_PIECE(pos->board[sq_to])] &= ~sq_to_bb;
-    pos->castling &= ~CastleRightsConsts[sq_to];
+    pos->castling &= ~Castle_Rights_Consts[sq_to];
     
     switch (type_of_move)
     {
@@ -45,7 +45,7 @@ void MakeMove(Position *pos, int move)
 
     case MOVE_TYPE_ROOK:
         pos->type_of_pieces[ROOK] ^= (sq_from_bb | sq_to_bb);
-        pos->castling &= ~CastleRightsConsts[sq_from];
+        pos->castling &= ~Castle_Rights_Consts[sq_from];
         pos->board[sq_to] = MAKE_PIECE(ROOK, us);
         pos->board[sq_from] = EMPTY;
         break;
@@ -58,7 +58,7 @@ void MakeMove(Position *pos, int move)
 
     case MOVE_TYPE_KING:
         pos->type_of_pieces[KING] ^= (sq_from_bb | sq_to_bb);
-        pos->castling &= ~CastleRightsConsts[sq_from];
+        pos->castling &= ~Castle_Rights_Consts[sq_from];
         pos->board[sq_to] = MAKE_PIECE(KING, us);
         pos->board[sq_from] = EMPTY;
         break;
@@ -102,7 +102,7 @@ void MakeMove(Position *pos, int move)
 
     case MOVE_TYPE_CASTLE_KING_SIDE:
         pos->type_of_pieces[KING] ^= sq_from_bb | sq_to_bb;
-        pos->castling &= ~CastleRightsConsts[sq_from];
+        pos->castling &= ~Castle_Rights_Consts[sq_from];
         pos->type_of_pieces[ROOK] ^= Castled_Rook_Files[us][0];
         pos->occupancy_by_color[us] ^= Castled_Rook_Files[us][0];
         pos->board[sq_from] = EMPTY;
@@ -113,7 +113,7 @@ void MakeMove(Position *pos, int move)
 
     case MOVE_TYPE_CASTLE_QUEEN_SIDE:
         pos->type_of_pieces[KING] ^= sq_from_bb | sq_to_bb;
-        pos->castling &= ~CastleRightsConsts[sq_from];
+        pos->castling &= ~Castle_Rights_Consts[sq_from];
         pos->type_of_pieces[ROOK] ^= Castled_Rook_Files[us][1];
         pos->occupancy_by_color[us] ^= Castled_Rook_Files[us][1];
         pos->board[Castled_Rook_Squares[us][0]] = EMPTY;

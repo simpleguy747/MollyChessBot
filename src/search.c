@@ -30,7 +30,7 @@ void CheckIfTimeOver()
 {
     if (stop_search == false && (nodes & 1023) != 0)
     {
-        long long current_time = GetCurrentTimeInMilliseconds();
+        long long current_time = get_current_time_in_milliseconds();
         stop_search = current_time >= end_time ? true : false;
     }
 }
@@ -42,24 +42,24 @@ int Negamax(Position *pos, int depth, int ply, LINE *pline)
     if (stop_search)
     {
         pline->cmove = 0;
-        return Evaluate(pos);
+        return evaluate(pos);
     }
     if (depth == 0)
     {
         pline->cmove = 0;
-        return Evaluate(pos);
+        return evaluate(pos);
     }
     nodes = nodes + 1;
     int max = -INF;
     int eval = max;
     MoveList moveList[1];
     char movePlayed = 0;
-    GenerateMoves(pos, moveList);
+    generate_moves(pos, moveList);
     for (int i = 0; i < moveList->count; i++)
     {
         copy_board();
-        MakeMove(pos, moveList->moves[i].move);
-        if (!IsCheck(pos))
+        make_move(pos, moveList->moves[i].move);
+        if (!is_check(pos))
         {
             pos->sideToMove ^= 1;
             movePlayed = 1;
@@ -87,7 +87,7 @@ int Negamax(Position *pos, int depth, int ply, LINE *pline)
     if (movePlayed == 0)
     {
         pline->cmove = 0;
-        return IsCheck(pos) ? (-MATE_VAL + ply) : 0;
+        return is_check(pos) ? (-MATE_VAL + ply) : 0;
     }
 
     return max;
@@ -95,30 +95,30 @@ int Negamax(Position *pos, int depth, int ply, LINE *pline)
 
 int NegamaxAlphaBeta(Position *pos, int depth, int ply, int alpha, int beta, LINE *pline)
 {
-    // DisplayBoard(pos);
+    // display_board(pos);
     LINE line;
     CheckIfTimeOver();
     if (stop_search)
     {
         pline->cmove = 0;
-        return Evaluate(pos);
+        return evaluate(pos);
     }
     if (depth == 0)
     {
         pline->cmove = 0;
-        return Evaluate(pos);
+        return evaluate(pos);
     }
     nodes = nodes + 1;
     MoveList moveList[1];
     char movePlayed = 0;
     int eval;
-    GenerateMoves(pos, moveList);
+    generate_moves(pos, moveList);
     for (int i = 0; i < moveList->count; i++)
     {
         copy_board();
-        MakeMove(pos, moveList->moves[i].move);
-        // DisplayMove( moveList->moves[i].move);
-        if (!IsCheck(pos))
+        make_move(pos, moveList->moves[i].move);
+        // display_move( moveList->moves[i].move);
+        if (!is_check(pos))
         {
             pos->sideToMove ^= 1;
             movePlayed = 1;
@@ -149,13 +149,13 @@ int NegamaxAlphaBeta(Position *pos, int depth, int ply, int alpha, int beta, LIN
     if (movePlayed == 0)
     {
         pline->cmove = 0;
-        return IsCheck(pos) ? (-MATE_VAL + ply) : 0;
+        return is_check(pos) ? (-MATE_VAL + ply) : 0;
     }
 
     return alpha;
 }
 
-void RootSearch(UCIHelper *uciHelper, Position *pos, int depth)
+void root_search(UCIHelper *uciHelper, Position *pos, int depth)
 {
     int ply = 0;
     nodes = 0;
@@ -164,7 +164,7 @@ void RootSearch(UCIHelper *uciHelper, Position *pos, int depth)
     int time = uciHelper->btime;
     int inc = uciHelper->binc;
     stop_search = false;
-    start_time = GetCurrentTimeInMilliseconds();
+    start_time = get_current_time_in_milliseconds();
     if (pos->sideToMove == COLOR_WHITE)
     {
         time = uciHelper->wtime;
@@ -182,19 +182,19 @@ void RootSearch(UCIHelper *uciHelper, Position *pos, int depth)
         LINE pvLine;
         pvLine.cmove = 0;
 
-        long long t_start = GetCurrentTimeInMilliseconds();
+        long long t_start = get_current_time_in_milliseconds();
         int eval = NegamaxAlphaBeta(pos, d, ply, -INF, INF, &pvLine);
         //int eval = Negamax(pos, d, ply, &pvLine);
-        long long t_end = GetCurrentTimeInMilliseconds();
+        long long t_end = get_current_time_in_milliseconds();
         if (!stop_search)
         {
-            MoveStrFromInt(best_move, bestMoveStr);
+            move_str_from_int(best_move, bestMoveStr);
             printf("info depth %d nodes %ld score cp %d time %lld nps %lld", d, nodes, eval, (t_end - t_start), ((nodes * 1000) / (t_end - t_start + 1)));
             printf(" pv ");
             for (int i = 0; i < pvLine.cmove; i++)
             {
                 char moveStr[6];
-                MoveStrFromInt(pvLine.argmove[i], moveStr); // Assuming you have a function to convert moves to string
+                move_str_from_int(pvLine.argmove[i], moveStr); // Assuming you have a function to convert moves to string
                 printf("%s ", moveStr);
             }
             printf("\n");
@@ -210,25 +210,25 @@ int randoms(int lower, int upper)
     return num;
 }
 
-void RootSearch2(UCIHelper *uciHelper, Position *pos, int depth)
+void root_search2(UCIHelper *uciHelper, Position *pos, int depth)
 {
     MoveList moveList[1];
 
     int bestMove = -1;
     char movePlayed = 0;
-    GenerateMoves(pos, moveList);
+    generate_moves(pos, moveList);
     int eval = -INF;
     for (int i = 0; i < moveList->count; i++)
     {
         int index = randoms(0, moveList->count - 1);
         // printf("random index :: %d\n", index);
         copy_board();
-        MakeMove(pos, moveList->moves[index].move);
-        if (!IsCheck(pos))
+        make_move(pos, moveList->moves[index].move);
+        if (!is_check(pos))
         {
             pos->sideToMove ^= 1;
             bestMove = moveList->moves[index].move;
-            eval = Evaluate(pos);
+            eval = evaluate(pos);
             movePlayed = 1;
             break;
         }
@@ -240,12 +240,12 @@ void RootSearch2(UCIHelper *uciHelper, Position *pos, int depth)
         for (int i = 0; i < moveList->count; i++)
         {
             copy_board();
-            MakeMove(pos, moveList->moves[i].move);
-            if (!IsCheck(pos))
+            make_move(pos, moveList->moves[i].move);
+            if (!is_check(pos))
             {
                 pos->sideToMove ^= 1;
                 bestMove = moveList->moves[i].move;
-                eval = Evaluate(pos);
+                eval = evaluate(pos);
                 movePlayed = 1;
                 break;
             }
@@ -254,7 +254,7 @@ void RootSearch2(UCIHelper *uciHelper, Position *pos, int depth)
     }
 
     char bestMoveStr[6];
-    MoveStrFromInt(bestMove, bestMoveStr);
+    move_str_from_int(bestMove, bestMoveStr);
     printf("info depth %d nodes %d score cp %d time %d nps %d pv %s\n", 1, 1, eval, 100, 100000, bestMoveStr);
     printf("bestmove %s\n", bestMoveStr);
     fflush(stdout);

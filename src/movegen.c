@@ -13,7 +13,7 @@
 #include "utilities.h"
 
 
-void GenerateMoves(Position *pos, MoveList *moveList)
+void generate_moves(Position *pos, MoveList *moveList)
 {
     moveList->count = 0;
     const int us = pos->sideToMove;
@@ -22,11 +22,11 @@ void GenerateMoves(Position *pos, MoveList *moveList)
     const uint64_t enemyPiecesBitBoard = pos->occupancy_by_color[us ^ 1];
     const uint64_t notOurPieces = ~pos->occupancy_by_color[us];
     const uint64_t occupied = ~pos->type_of_pieces[EMPTY];
-    GeneratePawnMoves(us, pos, moveList, emptyBitboard, enemyPiecesBitBoard, forwardDirection);
-    GenerateKnightMoves(us, pos, moveList, notOurPieces, MOVE_TYPE_KNIGHT);
-    GenerateKingNonCastleMoves(us, pos, moveList, notOurPieces, MOVE_TYPE_KING);
-    GenerateCastlingMoves(us,pos->castling,occupied,pos,moveList);
-    GenerateQueenMoves(us, pos, moveList, notOurPieces,occupied, MOVE_TYPE_QUEEN);
-    GenerateBishopMoves(us, pos, moveList, notOurPieces,occupied, MOVE_TYPE_BISHOP);
-    GenerateRookMoves(us, pos, moveList, notOurPieces,occupied, MOVE_TYPE_ROOK);
+    generate_pawn_moves(us, pos, moveList, emptyBitboard, enemyPiecesBitBoard, forwardDirection);
+    generate_knight_moves(us, pos, moveList, notOurPieces, MOVE_TYPE_KNIGHT);
+    generate_king_non_castle_moves(us, pos, moveList, notOurPieces, MOVE_TYPE_KING);
+    generate_castling_moves(us,pos->castling,occupied,pos,moveList);
+    generate_queen_moves(us, pos, moveList, notOurPieces,occupied, MOVE_TYPE_QUEEN);
+    generate_bishop_moves(us, pos, moveList, notOurPieces,occupied, MOVE_TYPE_BISHOP);
+    generate_rook_moves(us, pos, moveList, notOurPieces,occupied, MOVE_TYPE_ROOK);
 }

@@ -1,7 +1,7 @@
 #ifndef UCI_HELPER_H /* Include guard */
 #define UCI_HELPER_H
 
-int UciLoop();
+int uci_loop();
 void uci();
 void isready();
 void setoption(char *command);

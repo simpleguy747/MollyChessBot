@@ -6,6 +6,6 @@
 
 #define ENCODE_MOVE(moveType, from, to) ((moveType << 12) + ((from) << 6) + (to))
 
-void CreateMove(const int typeOfMove, const int sqFrom, uint64_t movesBitBoard, MoveList *moveList);
+void create_move(const int typeOfMove, const int sqFrom, uint64_t movesBitBoard, MoveList *moveList);
 
 #endif

@@ -6,7 +6,7 @@
 
 const int MaterialValue[] = {0, 100, 300, 315, 500, 900};
 
-int Evaluate(Position *pos)
+int evaluate(Position *pos)
 {
     int eval_by_color[2] = {0, 0};
     for (int color = COLOR_WHITE; color <= COLOR_BLACK; color++)

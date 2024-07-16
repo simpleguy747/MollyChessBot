@@ -117,8 +117,8 @@
 #define RANKS_STR "12345678"
 #define FILES_STR "abcdefgh"
 // Colorwise ranks.
-extern const uint64_t ColorWiseRanks[2][8];
-extern const uint64_t ColorWiseEnpassantRanks[2][2];
+extern const uint64_t Color_Wise_Ranks[2][8];
+extern const uint64_t Color_Wise_Enpassant_Ranks[2][2];
 
 
 #endif

@@ -15,10 +15,10 @@
 
 Position pos[1];
 // Main function
-int UciLoop()
+int uci_loop()
 {
     char command[1024];
-    InitMagicsAll();
+    init_magics_all();
 
     // Main loop to read commands
     while (1)
@@ -62,7 +62,7 @@ void setoption(char *command)
 // Handle the 'ucinewgame' command
 void ucinewgame()
 {
-    InitAll(pos);
+    init_all(pos);
     // Initialize new game settings here
 }
 
@@ -73,7 +73,7 @@ void position(char *command)
 
     if (strncmp(command, "startpos", 8) == 0)
     {
-        SetBoardFromFen(START_POSITION, pos);
+        set_board_from_fen(START_POSITION, pos);
         command += 8; // Move past "startpos"
 
         if (*command == ' ')
@@ -98,7 +98,7 @@ void position(char *command)
                 *moves = '\0'; // Terminate FEN string
                 moves += 7;    // Move past " moves "
             }
-            SetBoardFromFen(fen, pos);
+            set_board_from_fen(fen, pos);
             command = moves;
         }
         else
@@ -117,16 +117,16 @@ void position(char *command)
         while (moveStr != NULL)
         {
             // Replace with actual function to convert moveStr to move
-            int moveInt = MoveIntFromStr(moveStr);
+            int moveInt = move_int_from_str(moveStr);
             MoveList moveList;
-            GenerateMoves(pos, &moveList);
+            generate_moves(pos, &moveList);
             int moveMade = 0;
             for (int index = 0; index < moveList.count; index++)
             {
                 if(moveStr[4]!='\0'){
                     if ((moveList.moves[index].move) == moveInt)
                 {
-                    MakeMove(pos, moveList.moves[index].move);
+                    make_move(pos, moveList.moves[index].move);
                     pos->sideToMove ^= 1;
                     moveMade = 1;
                     break;
@@ -134,14 +134,14 @@ void position(char *command)
                 }
                 else if ((moveList.moves[index].move & 0xfff) == moveInt)
                 {
-                    MakeMove(pos, moveList.moves[index].move);
+                    make_move(pos, moveList.moves[index].move);
                     pos->sideToMove ^= 1;
                     moveMade = 1;
                     break;
                 }
             }
             // printf("\n**post** - %s\n",moveStr);
-            // DisplayBoard(pos);
+            // display_board(pos);
             // printf("\n");
             assert(moveMade != 0);
             moveStr = strtok(NULL, " ");
@@ -183,7 +183,7 @@ void go(char *command)
     }
 
     // printf("wtime%d,btime:%d,winc:%d,binc:%d\n", uciHelper.wtime, uciHelper.btime, uciHelper.winc, uciHelper.binc);
-    RootSearch(&uciHelper, pos, 4);
+    root_search(&uciHelper, pos, 4);
     fflush(stdout);
 }
 

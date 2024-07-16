@@ -3,6 +3,6 @@
 
 #include "position.h"
 
-void InitAll(Position *position);
+void init_all(Position *position);
 
 #endif

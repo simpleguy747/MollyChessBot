@@ -3,7 +3,7 @@
 
 #include "position.h"
 
-void GenerateMoves(Position *pos, MoveList *moveList);
+void generate_moves(Position *pos, MoveList *moveList);
 
 #define SQ_TO(move) (move & 0x3F)
 #define SQ_FROM(move) ((move >> 6) & 0x3F)

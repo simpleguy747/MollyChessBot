@@ -3,6 +3,6 @@
 
 #include "position.h"
 
-void SetBoardFromFen(char *fen, Position *pos);
+void set_board_from_fen(char *fen, Position *pos);
 
 #endif

@@ -2,7 +2,7 @@
 #include "position.h"
 #include "utilities.h"
 
-void CreateMove(const int typeOfMove, const int sqFrom, uint64_t movesBitBoard, MoveList *moveList)
+void create_move(const int typeOfMove, const int sqFrom, uint64_t movesBitBoard, MoveList *moveList)
 {
     for (; movesBitBoard > 0; movesBitBoard &= movesBitBoard - 1)
     {

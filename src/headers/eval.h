@@ -2,6 +2,6 @@
 #define EVAL_H
 #include "position.h"
 
-int Evaluate(Position *pos);
+int evaluate(Position *pos);
 
 #endif

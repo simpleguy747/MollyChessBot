@@ -7,10 +7,10 @@
 #include <stdlib.h>
 // Code taken from chessprogramming wiki.
 
-uint64_t RookTable[0x19000];  // To store rook attacks
-uint64_t BishopTable[0x1480]; // To store bishop attacks
-Magic RookMagics[64];
-Magic BishopMagics[64];
+uint64_t Rook_Table[0x19000];  // To store rook attacks
+uint64_t Bishop_Table[0x1480]; // To store bishop attacks
+Magic Rook_Magics[64];
+Magic Bishop_Magics[64];
 
 int BitsRequiredByRook[] =
     {
@@ -172,8 +172,8 @@ void InitMagics(int pieceType, uint64_t *table, Magic *magics)
     }
 }
 
-void InitMagicsAll()
+void init_magics_all()
 {
-    InitMagics(ROOK, RookTable, RookMagics);
-    InitMagics(BISHOP, BishopTable, BishopMagics);
+    InitMagics(ROOK, Rook_Table, Rook_Magics);
+    InitMagics(BISHOP, Bishop_Table, Bishop_Magics);
 }

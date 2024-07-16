@@ -4,7 +4,7 @@
 #include "position.h"
 #include <stdint.h>
 
-void GenerateRookMoves(const int us, const Position *pos, MoveList *moveList, const uint64_t targetBitboard, uint64_t occupied, int typeOfMove);
+void generate_rook_moves(const int us, const Position *pos, MoveList *moveList, const uint64_t targetBitboard, uint64_t occupied, int typeOfMove);
 
 
 #endif

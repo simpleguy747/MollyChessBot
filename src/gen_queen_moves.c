@@ -6,14 +6,14 @@
 #include "utilities.h"
 #include <stdint.h>
 
-void GenerateQueenMoves(const int us, const Position *pos, MoveList *moveList, const uint64_t targetBitboard, uint64_t occupied, int typeOfMove)
+void generate_queen_moves(const int us, const Position *pos, MoveList *moveList, const uint64_t targetBitboard, uint64_t occupied, int typeOfMove)
 {
     uint64_t ourQueens = pos->type_of_pieces[QUEEN] & pos->occupancy_by_color[us];
 
     for (; ourQueens > 0; ourQueens &= ourQueens - 1)
     {
         int sqFrom = PopLSB(ourQueens);
-        uint64_t queenAttacksFromSquare = (GenerateRookAttacks(sqFrom, occupied) | GenerateBishopAttacks(sqFrom, occupied)) & targetBitboard;
-        CreateMove(typeOfMove, sqFrom, queenAttacksFromSquare, moveList);
+        uint64_t queenAttacksFromSquare = (generate_rook_attacks(sqFrom, occupied) | generate_bishop_attacks(sqFrom, occupied)) & targetBitboard;
+        create_move(typeOfMove, sqFrom, queenAttacksFromSquare, moveList);
     }
 }
