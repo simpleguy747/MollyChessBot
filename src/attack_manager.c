@@ -6,7 +6,7 @@
 #include "squares.h"
 #include "utilities.h"
 
-uint64_t is_square_attacked(int square, Position *pos)
+uint64_t is_square_attacked(int square,const Position *pos)
 {
     const int us = pos->sideToMove;
     const int enemy = us ^ 1;
@@ -33,7 +33,7 @@ uint64_t is_square_attacked(int square, Position *pos)
     return pieces & (1ULL << square);
 }
 
-uint64_t is_check(Position *pos)
+uint64_t is_check(const Position *pos)
 {
     int kingSquare = PopLSB(pos->type_of_pieces[KING] & pos->occupancy_by_color[pos->sideToMove]);
     uint64_t isAttacked = is_square_attacked(kingSquare, pos);

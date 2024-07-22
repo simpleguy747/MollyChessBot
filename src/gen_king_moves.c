@@ -18,7 +18,7 @@ void generate_king_non_castle_moves(const int us, const Position *pos, MoveList 
     }
 }
 
-void generate_castling_moves(int sideToMove, uint64_t castlePermissions, uint64_t occupied, Position *position, MoveList *moveList)
+void generate_castling_moves(int sideToMove, uint64_t castlePermissions, uint64_t occupied, const Position *position, MoveList *moveList)
 {
 
     if ((castlePermissions & CastleBits[sideToMove][0]) && (!(occupied & Castle_Jump[sideToMove][0])) && (!is_square_attacked(Castle_Jump_Squares[sideToMove][0], position)) && (!is_square_attacked(Castle_Jump_Squares[sideToMove][1], position)))

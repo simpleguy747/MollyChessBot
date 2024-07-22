@@ -4,7 +4,7 @@
 #include <stdint.h>
 #include "position.h"
 
-uint64_t is_square_attacked(int square, Position *pos);
-uint64_t is_check(Position *pos);
+uint64_t is_square_attacked(int square, const Position *pos);
+uint64_t is_check(const Position *pos);
 
 #endif

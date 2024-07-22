@@ -31,7 +31,7 @@ void CreatePromotionMoves(int offset, uint64_t movesBitBoard, MoveList *moveList
     }
 }
 
-void GeneratePawnNonCapturePromoMoves(const int us, const Position *pos, MoveList *moveList, const uint64_t targetBitboard, int forwardDirection)
+void generate_pawn_non_captures_and_promotions(const int us, const Position *pos, MoveList *moveList, const uint64_t targetBitboard, int forwardDirection)
 {
     uint64_t ourPawns = pos->type_of_pieces[PAWN] & pos->occupancy_by_color[us];
     // Single push for pawns not on 7th-rank.
@@ -45,7 +45,7 @@ void GeneratePawnNonCapturePromoMoves(const int us, const Position *pos, MoveLis
     CreatePromotionMoves(-forwardDirection, ourPawnsPromoting, moveList);
 }
 
-void GeneratePawnCapturesAndPromotions(const int us, const Position *pos, MoveList *moveList, const uint64_t targetBitboard, int forwardDirection)
+void generate_pawn_captures_and_promotions(const int us, const Position *pos, MoveList *moveList, const uint64_t targetBitboard, int forwardDirection)
 {
     uint64_t ourPawns = pos->type_of_pieces[PAWN] & pos->occupancy_by_color[us];
     uint64_t pawnCaptures = (((ourPawns & NOT_FILE_A_BB) << 7) >> (16 * us)) & targetBitboard;
@@ -70,6 +70,5 @@ void GeneratePawnCapturesAndPromotions(const int us, const Position *pos, MoveLi
 
 void generate_pawn_moves(const int us, const Position *pos, MoveList *moveList, const uint64_t emptyBitboard, uint64_t enemyBitboard, int forwardDirection)
 {
-    GeneratePawnNonCapturePromoMoves(us, pos, moveList, emptyBitboard, forwardDirection);
-    GeneratePawnCapturesAndPromotions(us, pos, moveList, enemyBitboard, forwardDirection);
+    generate_pawn_non_captures_and_promotions(us, pos, moveList, emptyBitboard, forwardDirection);
 }
