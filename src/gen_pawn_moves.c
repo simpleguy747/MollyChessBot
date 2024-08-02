@@ -14,6 +14,7 @@ void CreatePawnMoves(int typeOfMove, int offset, uint64_t movesBitBoard, MoveLis
         int sqTo = PopLSB(movesBitBoard);
         int sqFrom = sqTo + offset;
         moveList->moves[moveList->count].move = ENCODE_MOVE(typeOfMove, sqFrom, sqTo);
+        moveList->moves[moveList->count].mvv_lva_value = 0;
         moveList->count++;
     }
 }

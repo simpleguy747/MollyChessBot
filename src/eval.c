@@ -4,7 +4,7 @@
 #include "position.h"
 #include "color.h"
 
-const int MaterialValue[] = {0, 100, 300, 315, 500, 900};
+const int MaterialValue[] = {0, 100, 300, 315, 500, 900, 1000};
 
 int evaluate(Position *pos)
 {

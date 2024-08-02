@@ -24,12 +24,14 @@ void generate_castling_moves(int sideToMove, uint64_t castlePermissions, uint64_
     if ((castlePermissions & CastleBits[sideToMove][0]) && (!(occupied & Castle_Jump[sideToMove][0])) && (!is_square_attacked(Castle_Jump_Squares[sideToMove][0], position)) && (!is_square_attacked(Castle_Jump_Squares[sideToMove][1], position)))
     {
         moveList->moves[moveList->count].move = ENCODE_MOVE(MOVE_TYPE_CASTLE_QUEEN_SIDE, Castle_Squares[sideToMove][0], Castle_Squares[sideToMove][1]);
+        moveList->moves[moveList->count].mvv_lva_value = 0;
         moveList->count++;
     }
 
     if ((castlePermissions & CastleBits[sideToMove][1]) && (!(occupied & Castle_Jump[sideToMove][1])) && (!is_square_attacked(Castle_Jump_Squares[sideToMove][2], position)) && (!is_square_attacked(Castle_Jump_Squares[sideToMove][3], position)))
     {
         moveList->moves[moveList->count].move = ENCODE_MOVE(MOVE_TYPE_CASTLE_KING_SIDE, Castle_Squares[sideToMove][2], Castle_Squares[sideToMove][3]);
+        moveList->moves[moveList->count].mvv_lva_value = 0;
         moveList->count++;
     }
 }

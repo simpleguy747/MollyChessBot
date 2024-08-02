@@ -11,6 +11,37 @@
 #include "position.h"
 #include "squares.h"
 #include "utilities.h"
+#include "eval.h"
+
+int calculate_mvv_lva(const Position *position, Move* move_param)
+{
+    int sq_from = SQ_FROM(move_param->move);
+    int sq_to = SQ_TO(move_param->move);
+    int attacker = position->board[sq_from];
+    int victim = position->board[sq_to];
+    int mvv = 6*TYPE_OF_PIECE(victim);
+    int lva = TYPE_OF_PIECE(attacker);
+    move_param->mvv_lva_value = (mvv-lva);
+    return mvv - lva;
+}
+
+void sort_moves(const Position *position, MoveList *moveList)
+{
+    // Sort moves by MVV/LVA score
+    for (int i = 0; i < moveList->count; i++)
+    {
+        for (int j = i + 1; j < moveList->count; j++)
+        {
+            if (calculate_mvv_lva(position,&moveList->moves[i]) < calculate_mvv_lva(position,&moveList->moves[j]))
+            {
+                Move temp = moveList->moves[i];
+                moveList->moves[i] = moveList->moves[j];
+                moveList->moves[j] = temp;
+            }
+        }
+    }
+}
+
 
 void generate_capture_moves(const int us, const Position *pos, MoveList *moveList, const uint64_t emptyBitboard, uint64_t enemyBitboard, int forwardDirection)
 {
@@ -19,7 +50,8 @@ void generate_capture_moves(const int us, const Position *pos, MoveList *moveLis
     generate_king_non_castle_moves(us, pos, moveList, enemyBitboard, MOVE_TYPE_KING);
     generate_queen_moves(us, pos, moveList, enemyBitboard, ~emptyBitboard, MOVE_TYPE_QUEEN);
     generate_bishop_moves(us, pos, moveList, enemyBitboard, ~emptyBitboard, MOVE_TYPE_BISHOP);
-    generate_rook_moves(us, pos, moveList, enemyBitboard,  ~emptyBitboard, MOVE_TYPE_ROOK);
+    generate_rook_moves(us, pos, moveList, enemyBitboard, ~emptyBitboard, MOVE_TYPE_ROOK);
+    sort_moves(pos,moveList);
 }
 
 void generate_non_captures(const int us, const Position *pos, MoveList *moveList, const uint64_t emptyBitboard, uint64_t enemyBitboard, int forwardDirection)
@@ -30,8 +62,10 @@ void generate_non_captures(const int us, const Position *pos, MoveList *moveList
     generate_castling_moves(us, pos->castling, ~emptyBitboard, pos, moveList);
     generate_queen_moves(us, pos, moveList, emptyBitboard, ~emptyBitboard, MOVE_TYPE_QUEEN);
     generate_bishop_moves(us, pos, moveList, emptyBitboard, ~emptyBitboard, MOVE_TYPE_BISHOP);
-    generate_rook_moves(us, pos, moveList, emptyBitboard,  ~emptyBitboard, MOVE_TYPE_ROOK);
+    generate_rook_moves(us, pos, moveList, emptyBitboard, ~emptyBitboard, MOVE_TYPE_ROOK);
 }
+
+
 void generate_moves(Position *pos, MoveList *moveList)
 {
     moveList->count = 0;
@@ -47,7 +81,7 @@ void generate_moves(Position *pos, MoveList *moveList)
 
     // generate_pawn_moves(us, pos, moveList, emptyBitboard, enemyPiecesBitBoard, forwardDirection);
     // generate_knight_moves(us, pos, moveList, notOurPieces, MOVE_TYPE_KNIGHT);
-    
+
     // generate_king_non_castle_moves(us, pos, moveList, notOurPieces, MOVE_TYPE_KING);
     // generate_castling_moves(us, pos->castling, occupied, pos, moveList);
     // generate_queen_moves(us, pos, moveList, notOurPieces, occupied, MOVE_TYPE_QUEEN);

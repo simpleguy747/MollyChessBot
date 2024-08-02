@@ -12,7 +12,7 @@
 #include "movegen.h"
 #include "move_manager.h"
 #include "assert.h"
-
+#include "perft_manager.h"
 Position pos[1];
 // Main function
 int uci_loop()
@@ -202,6 +202,12 @@ void quit()
     exit(0);
 }
 
+void perft_uci(char*command){
+    printf("%s",command);
+    int depth = atoi(command+6);
+    uint64_t nodes = perft(pos,depth,0);
+    printf("actual nodes:%ld",nodes);
+}
 // Parse and handle commands
 void parseCommand(char *command)
 {
@@ -237,6 +243,10 @@ void parseCommand(char *command)
     else if (strncmp(command, "quit", 4) == 0)
     {
         quit();
+    }
+    else if (strncmp(command, "perft", 5) == 0)
+    {
+        perft_uci(command);
     }
     else
     {
