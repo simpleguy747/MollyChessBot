@@ -1,0 +1,1 @@
+int bench(UCIHelper *uciHelper, Position *pos);

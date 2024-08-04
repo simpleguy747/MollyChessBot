@@ -19,6 +19,7 @@ typedef struct UCIHelper
     int btime;
     int winc;
     int binc;
+    int depth;
 
 } UCIHelper;
 

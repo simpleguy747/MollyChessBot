@@ -155,12 +155,16 @@ int NegamaxAlphaBeta(Position *pos, int depth, int ply, int alpha, int beta, LIN
     return alpha;
 }
 
-void root_search(UCIHelper *uciHelper, Position *pos, int depth)
+void root_search(UCIHelper *uciHelper, Position *pos)
 {
     int ply = 0;
     nodes = 0;
     int maxDepth = 100;
 
+    if (uciHelper->depth != 0)
+    {
+        maxDepth = uciHelper->depth;
+    }
     int time = uciHelper->btime;
     int inc = uciHelper->binc;
     stop_search = false;
@@ -181,10 +185,10 @@ void root_search(UCIHelper *uciHelper, Position *pos, int depth)
     {
         LINE pvLine;
         pvLine.cmove = 0;
-
+        nodes = 0;
         long long t_start = get_current_time_in_milliseconds();
         int eval = NegamaxAlphaBeta(pos, d, ply, -INF, INF, &pvLine);
-        //int eval = Negamax(pos, d, ply, &pvLine);
+        // int eval = Negamax(pos, d, ply, &pvLine);
         long long t_end = get_current_time_in_milliseconds();
         if (!stop_search)
         {
