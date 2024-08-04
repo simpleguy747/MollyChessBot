@@ -33,8 +33,9 @@ Special thanks to the Engine Programming community on Discord for their support 
 To build and run the engine, follow these steps:
 
 1. Clone the repository: `git clone https://github.com/simpleguy747/MollyChessBot.git`
-2. Build the engine: `gcc -o mollychessbot mollychessbot.c`
-3. Run the engine: `./mollychessbot`
+2. Build the engine in debug mode: `make clean debug`
+3. Build the engine in release mode: `make clean release`
+4. Run the engine: `./mollychessbot`
 
 ### License
 
