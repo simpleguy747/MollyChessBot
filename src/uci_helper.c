@@ -227,6 +227,9 @@ void bench_uci(char *command)
     uciHelper.winc = 60 * 1000;
     uciHelper.binc = 60 * 1000;
 
+    // uint64_t c_nodes[20];
+    // double times[20];
+
     // bench
     char *fens[] = {
         // Fens incorporated from : https://github.com/Ciekce/Stormphrax/blob/main/src/bench.cpp#L29
@@ -281,22 +284,31 @@ void bench_uci(char *command)
         "3br1k1/p1pn3p/1p3n2/5pNq/2P1p3/1PN3PP/P2Q1PB1/4R1K1 w - - 0 23",
         "2r2b2/5p2/5k2/p1r1pP2/P2pB3/1P3P2/K1P3R1/7R w - - 23 93"};
     int fen_length = sizeof(fens) / sizeof(fens[0]);
-    uint64_t cumulative_nodes = 0;
-    long long t_start = get_current_time_in_milliseconds();
-    for (int i = 0; i < fen_length; i++)
-    {
-        ucinewgame();
-        set_board_from_fen(fens[i], pos);
-        uint64_t nodes = bench(&uciHelper, pos);
-        cumulative_nodes = cumulative_nodes + nodes;
-        printf("\n");
-    }
-    long long t_end = get_current_time_in_milliseconds();
-    
-    double elapsed_seconds = (1.0 * (t_end - t_start)) / 1000;
-    printf("\n===================================\n");
-    printf("info string %lf seconds\n",elapsed_seconds );
-    printf("info string %ld nodes %lf nps\n", cumulative_nodes, ((1.0 * cumulative_nodes) / elapsed_seconds));
+    // for (int i1 = 0; i1 < 20; i1++)
+    // {
+        uint64_t cumulative_nodes = 0;
+        long long t_start = get_current_time_in_milliseconds();
+        for (int i = 0; i < fen_length; i++)
+        {
+            ucinewgame();
+            set_board_from_fen(fens[i], pos);
+            uint64_t nodes = bench(&uciHelper, pos);
+            cumulative_nodes = cumulative_nodes + nodes;
+            printf("\n");
+        }
+        long long t_end = get_current_time_in_milliseconds();
+
+        double elapsed_seconds = (1.0 * (t_end - t_start)) / 1000;
+        printf("\n===================================\n");
+        printf("info string %lf seconds\n", elapsed_seconds);
+        printf("info string %ld nodes %lf nps\n", cumulative_nodes, ((1.0 * cumulative_nodes) / elapsed_seconds));
+        // c_nodes[i1] = cumulative_nodes;
+        // times[i1]=elapsed_seconds;
+    // }
+
+    // for(int j=0;j<20;j++){
+    //     printf("%ld nodes => %lf seconds\n",c_nodes[j],times[j]);
+    // }
 }
 
 // Parse and handle commands
