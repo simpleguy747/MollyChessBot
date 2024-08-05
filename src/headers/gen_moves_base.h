@@ -4,8 +4,13 @@
 #include "position.h"
 #include <stdint.h>
 
-#define ENCODE_MOVE(moveType, from, to) ((moveType << 12) + ((from) << 6) + (to))
+// #define ENCODE_MOVE(moveType, from, to) ((moveType << 12) + ((from) << 6) + (to))
 
-void create_move(const int typeOfMove, const int sqFrom, uint64_t movesBitBoard, MoveList *moveList);
+inline int ENCODE_MOVE(int moveType, int from, int to)
+{
+    return (moveType << 12) + (from << 6) + to;
+}
+
+void create_move(const Position *pos, const int typeOfMove, const int sqFrom, uint64_t movesBitBoard, MoveList *moveList);
 
 #endif

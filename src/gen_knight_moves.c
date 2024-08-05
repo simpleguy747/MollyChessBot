@@ -13,6 +13,6 @@ void generate_knight_moves(const int us, const Position *pos, MoveList *moveList
     {
         int sqFrom = PopLSB(ourKnights);
         uint64_t knightAttacksFromSquare = KNIGHT_ATTACKS[sqFrom] & targetBitboard;
-        create_move(typeOfMove, sqFrom, knightAttacksFromSquare, moveList);
+        create_move(pos,typeOfMove, sqFrom, knightAttacksFromSquare, moveList);
     }
 }

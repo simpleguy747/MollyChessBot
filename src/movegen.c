@@ -12,18 +12,9 @@
 #include "squares.h"
 #include "utilities.h"
 #include "eval.h"
+#include "mvvlva.h"
 
-int calculate_mvv_lva(const Position *position, Move* move_param)
-{
-    int sq_from = SQ_FROM(move_param->move);
-    int sq_to = SQ_TO(move_param->move);
-    int attacker = position->board[sq_from];
-    int victim = position->board[sq_to];
-    int mvv = 6*TYPE_OF_PIECE(victim);
-    int lva = TYPE_OF_PIECE(attacker);
-    move_param->mvv_lva_value = (mvv-lva);
-    return mvv - lva;
-}
+
 
 void sort_moves(const Position *position, MoveList *moveList)
 {
@@ -32,7 +23,7 @@ void sort_moves(const Position *position, MoveList *moveList)
     {
         for (int j = i + 1; j < moveList->count; j++)
         {
-            if (calculate_mvv_lva(position,&moveList->moves[i]) < calculate_mvv_lva(position,&moveList->moves[j]))
+            if (moveList->moves[i].mvv_lva_value < moveList->moves[j].mvv_lva_value)
             {
                 Move temp = moveList->moves[i];
                 moveList->moves[i] = moveList->moves[j];

@@ -14,7 +14,7 @@ void generate_king_non_castle_moves(const int us, const Position *pos, MoveList 
     {
         int sqFrom = PopLSB(ourKing);
         uint64_t kingAttacksFromSquare = KING_ATTACKS[sqFrom] & targetBitboard;
-        create_move(typeOfMove, sqFrom, kingAttacksFromSquare, moveList);
+        create_move(pos,typeOfMove, sqFrom, kingAttacksFromSquare, moveList);
     }
 }
 

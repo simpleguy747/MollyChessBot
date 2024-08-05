@@ -14,6 +14,6 @@ void generate_rook_moves(const int us, const Position *pos, MoveList *moveList, 
     {
         int sqFrom = PopLSB(ourRooks);
         uint64_t rookAttacksFromSquare = generate_rook_attacks(sqFrom, occupied) & targetBitboard;
-        create_move(typeOfMove, sqFrom, rookAttacksFromSquare, moveList);
+        create_move(pos,typeOfMove, sqFrom, rookAttacksFromSquare, moveList);
     }
 }

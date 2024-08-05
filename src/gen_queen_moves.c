@@ -14,6 +14,6 @@ void generate_queen_moves(const int us, const Position *pos, MoveList *moveList,
     {
         int sqFrom = PopLSB(ourQueens);
         uint64_t queenAttacksFromSquare = (generate_rook_attacks(sqFrom, occupied) | generate_bishop_attacks(sqFrom, occupied)) & targetBitboard;
-        create_move(typeOfMove, sqFrom, queenAttacksFromSquare, moveList);
+        create_move(pos,typeOfMove, sqFrom, queenAttacksFromSquare, moveList);
     }
 }

@@ -31,8 +31,24 @@
 
 #define PIECES_STR ".PNBRQK#*pnbrqk"
 
+inline int TYPE_OF_PIECE(int piece)
+{
+    return piece & 7;
+}
 
-#define TYPE_OF_PIECE(piece) ((piece)&7)
-#define COLOR_OF_PIECE(piece) ((piece)>>3)
-#define MAKE_PIECE(type,color) ((type)+(color<<3))
+inline int COLOR_OF_PIECE(int piece)
+{
+    return piece >> 3;
+}
+
+inline int MAKE_PIECE(int type, int color)
+{
+    return type+(color<<3);
+}
+
+
+
+// #define TYPE_OF_PIECE(piece) ((piece)&7)
+// #define COLOR_OF_PIECE(piece) ((piece)>>3)
+// #define MAKE_PIECE(type,color) ((type)+(color<<3))
 #endif
