@@ -4,6 +4,7 @@
 #include "position.h"
 
 void generate_moves(Position *pos, MoveList *moveList);
+void generate_qsearch_moves(Position *pos, MoveList *moveList);
 
 inline int SQ_TO(int move)
 {

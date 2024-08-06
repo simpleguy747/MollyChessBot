@@ -14,8 +14,6 @@
 #include "eval.h"
 #include "mvvlva.h"
 
-
-
 void sort_moves(const Position *position, MoveList *moveList)
 {
     // Sort moves by MVV/LVA score
@@ -33,7 +31,6 @@ void sort_moves(const Position *position, MoveList *moveList)
     }
 }
 
-
 void generate_capture_moves(const int us, const Position *pos, MoveList *moveList, const uint64_t emptyBitboard, uint64_t enemyBitboard, int forwardDirection)
 {
     generate_pawn_captures_and_promotions(us, pos, moveList, enemyBitboard, forwardDirection);
@@ -42,7 +39,7 @@ void generate_capture_moves(const int us, const Position *pos, MoveList *moveLis
     generate_queen_moves(us, pos, moveList, enemyBitboard, ~emptyBitboard, MOVE_TYPE_QUEEN);
     generate_bishop_moves(us, pos, moveList, enemyBitboard, ~emptyBitboard, MOVE_TYPE_BISHOP);
     generate_rook_moves(us, pos, moveList, enemyBitboard, ~emptyBitboard, MOVE_TYPE_ROOK);
-    sort_moves(pos,moveList);
+    sort_moves(pos, moveList);
 }
 
 void generate_non_captures(const int us, const Position *pos, MoveList *moveList, const uint64_t emptyBitboard, uint64_t enemyBitboard, int forwardDirection)
@@ -56,6 +53,19 @@ void generate_non_captures(const int us, const Position *pos, MoveList *moveList
     generate_rook_moves(us, pos, moveList, emptyBitboard, ~emptyBitboard, MOVE_TYPE_ROOK);
 }
 
+void generate_qsearch_moves(Position *pos, MoveList *moveList)
+{
+    moveList->count = 0;
+    const int us = pos->sideToMove;
+    const int forwardDirection = 8 - (16 * us);
+    const uint64_t emptyBitboard = pos->type_of_pieces[EMPTY];
+    const uint64_t enemyPiecesBitBoard = pos->occupancy_by_color[us ^ 1];
+    // const uint64_t notOurPieces = ~pos->occupancy_by_color[us];
+    // const uint64_t occupied = ~pos->type_of_pieces[EMPTY];
+
+    generate_capture_moves(us, pos, moveList, emptyBitboard, enemyPiecesBitBoard, forwardDirection);
+    // generate_non_captures(us, pos, moveList, emptyBitboard, enemyPiecesBitBoard, forwardDirection);
+}
 
 void generate_moves(Position *pos, MoveList *moveList)
 {

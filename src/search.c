@@ -93,6 +93,58 @@ int Negamax(Position *pos, int depth, int ply, LINE *pline)
     return max;
 }
 
+// Quiescence Search
+int QSearch(Position *pos, int ply, int alpha, int beta)
+{
+    int evaluation = evaluate(pos);
+
+    if (evaluation >= beta)
+    {
+        return beta;
+    }
+    if (evaluation > alpha)
+    {
+        alpha = evaluation;
+    }
+    char movePlayed = 0;
+    int eval;
+    MoveList moveList[1];
+    generate_qsearch_moves(pos, moveList);
+    for (int i = 0; i < moveList->count; i++)
+    {
+        copy_board();
+        make_move(pos, moveList->moves[i].move);
+        // display_move( moveList->moves[i].move);
+        if (!is_check(pos))
+        {
+            pos->sideToMove ^= 1;
+            movePlayed = 1;
+            eval = -QSearch(pos, ply + 1, -beta, -alpha);
+            if (eval > alpha)
+            {
+                if (eval >= beta)
+                    return beta;
+                alpha = eval;
+
+                if (ply == 0)
+                {
+                    if (!stop_search)
+                        best_move = moveList->moves[i].move;
+                }
+                // pline->argmove[0] = moveList->moves[i].move;
+                // memcpy(pline->argmove + 1, line.argmove, line.cmove * sizeof(int));
+                // pline->cmove = line.cmove + 1;
+            }
+        }
+        take_back();
+        if (stop_search)
+        {
+            break;
+        }
+    }
+    return alpha;
+}
+
 int NegamaxAlphaBeta(Position *pos, int depth, int ply, int alpha, int beta, LINE *pline)
 {
     // display_board(pos);
@@ -106,7 +158,8 @@ int NegamaxAlphaBeta(Position *pos, int depth, int ply, int alpha, int beta, LIN
     if (depth == 0)
     {
         pline->cmove = 0;
-        return evaluate(pos);
+        // return evaluate(pos);
+        return QSearch(pos, ply + 1, alpha, beta);
     }
     nodes = nodes + 1;
     MoveList moveList[1];
