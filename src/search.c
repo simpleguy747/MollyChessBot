@@ -106,7 +106,7 @@ int QSearch(Position *pos, int ply, int alpha, int beta)
     {
         alpha = evaluation;
     }
-    char movePlayed = 0;
+    
     int eval;
     MoveList moveList[1];
     generate_qsearch_moves(pos, moveList);
@@ -114,11 +114,11 @@ int QSearch(Position *pos, int ply, int alpha, int beta)
     {
         copy_board();
         make_move(pos, moveList->moves[i].move);
-        // display_move( moveList->moves[i].move);
+        
         if (!is_check(pos))
         {
             pos->sideToMove ^= 1;
-            movePlayed = 1;
+            
             eval = -QSearch(pos, ply + 1, -beta, -alpha);
             if (eval > alpha)
             {

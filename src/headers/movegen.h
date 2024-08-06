@@ -6,17 +6,17 @@
 void generate_moves(Position *pos, MoveList *moveList);
 void generate_qsearch_moves(Position *pos, MoveList *moveList);
 
-inline int SQ_TO(int move)
+static inline int SQ_TO(int move)
 {
     return move & 0x3F;
 }
 
-inline int SQ_FROM(int move)
+static inline int SQ_FROM(int move)
 {
     return (move >> 6) & 0x3F;
 }
 
-inline int TYPE_OF_MOVE(int move)
+static inline int TYPE_OF_MOVE(int move)
 {
     return (move >> 12) & 0xF;
 }

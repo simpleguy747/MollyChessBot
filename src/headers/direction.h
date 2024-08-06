@@ -14,7 +14,7 @@
 
 // #define SHIFT_UP(color,bitBoard)  ((bitBoard<<8)>>(16*color))
 
-inline uint64_t SHIFT_UP(int color, uint64_t bitBoard)
+static inline uint64_t SHIFT_UP(int color, uint64_t bitBoard)
 {
     return (bitBoard << 8) >> (16 * color);
 }

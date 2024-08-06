@@ -31,17 +31,17 @@
 
 #define PIECES_STR ".PNBRQK#*pnbrqk"
 
-inline int TYPE_OF_PIECE(int piece)
+static inline int TYPE_OF_PIECE(int piece)
 {
     return piece & 7;
 }
 
-inline int COLOR_OF_PIECE(int piece)
+static inline int COLOR_OF_PIECE(int piece)
 {
     return piece >> 3;
 }
 
-inline int MAKE_PIECE(int type, int color)
+static inline int MAKE_PIECE(int type, int color)
 {
     return type+(color<<3);
 }

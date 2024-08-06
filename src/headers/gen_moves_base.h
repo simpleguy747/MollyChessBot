@@ -6,7 +6,7 @@
 
 // #define ENCODE_MOVE(moveType, from, to) ((moveType << 12) + ((from) << 6) + (to))
 
-inline int ENCODE_MOVE(int moveType, int from, int to)
+static inline int ENCODE_MOVE(int moveType, int from, int to)
 {
     return (moveType << 12) + (from << 6) + to;
 }

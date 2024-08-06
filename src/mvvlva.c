@@ -11,7 +11,6 @@ void calculate_mvv_lva(const Position *position, Move *move_param)
     int victim = position->board[sq_to];
     int mvv = 6 * TYPE_OF_PIECE(victim);
     int lva = TYPE_OF_PIECE(attacker);
-    int type_of_move = TYPE_OF_MOVE(move_param->move);
     int mvv_lva_score = 0;
     if (victim != EMPTY)
     {
