@@ -10,6 +10,7 @@
 #include <ctype.h>
 #include <stdio.h>
 #include <string.h>
+#include "zobrist.h"
 
 // Set the board as per the pieces and update the pieces and occupancy_by_color bitboards better.
 void SetBoard(char *fen, Position *pos)
@@ -207,7 +208,7 @@ void set_board_from_fen(char *fen, Position *pos)
     SetEnPassantSquare(fen, pos);
     SetHalfMoveNumber(fen, pos);
     SetFullMoveNumber(fen, pos);
-
+    pos->hash_key = generate_hash_key_from_scratch(pos);
     // for (int p = EMPTY; p <= KING; p++)
     // {
     //     printf("%d -> %lu\n", p, pos->type_of_pieces[p]);

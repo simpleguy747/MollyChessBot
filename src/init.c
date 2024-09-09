@@ -2,7 +2,7 @@
 #include "position.h"
 #include "stdint.h"
 #include "string.h"
-
+#include "zobrist.h"
 void init_all(Position *position)
 {
     memset(position->board, 0, 64 * sizeof(char));
@@ -10,4 +10,6 @@ void init_all(Position *position)
     memset(position->occupancy_by_color, 0, 2 * sizeof(uint64_t));
     position->castling = 0;
     position->enpassantSquare = 0;
+
+    init_random_hash_keys();
 }

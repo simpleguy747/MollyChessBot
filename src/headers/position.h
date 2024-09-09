@@ -13,6 +13,7 @@ typedef struct Position
     uint64_t enpassantSquare;
     int halfMoves;
     int fullMoves;
+    uint64_t hash_key;
 } Position;
 
 typedef struct Move
