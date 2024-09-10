@@ -18,12 +18,27 @@
 #include "pieces.h"
 #include "squares.h"
 #include "perft_manager.h"
-
+#include "transposition_table.h"
 int main()
 {
   // uci_loop();
-  test_perft();
 
-  // perft_numbers("4r3/5b2/p3Pn2/P1kP4/2p4p/7N/2BK2P1/3N2R1 w - - 0 1", 2, 28, 7);
+  Position pos[1];
+  init_all(pos);
+  init_magics_all();
+
+  set_board_from_fen("8/k7/3p4/p2P1p2/P2P1P2/8/8/K7 w - - 0 1", pos);
+  UCIHelper uciHelper[1];
+
+  uciHelper->wtime = 300000000;
+  uciHelper->btime = 300000000;
+  uciHelper->winc = 100000;
+  uciHelper->binc = 100000;
+  uciHelper->depth = 0;
+
+  clear_hash_table();
+
+  root_search(uciHelper, pos);
+
   return 0;
 }

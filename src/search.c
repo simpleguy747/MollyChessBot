@@ -13,6 +13,10 @@
 #include <stdbool.h>
 #include "eval.h"
 #include <stdlib.h>
+#include "transposition_table.h"
+#include "zobrist.h"
+#include <inttypes.h>
+#include <assert.h>
 
 int best_move = -1;
 uint64_t nodes = 0;
@@ -22,8 +26,8 @@ bool stop_search = false;
 
 typedef struct LINE
 {
-    int cmove;       // Number of moves in the line.
-    int argmove[32]; // The line.
+    int cmove;        // Number of moves in the line.
+    int argmove[256]; // The line.
 } LINE;
 
 void CheckIfTimeOver()
@@ -31,10 +35,11 @@ void CheckIfTimeOver()
     if (stop_search == false && (nodes & 1023) != 0)
     {
         long long current_time = get_current_time_in_milliseconds();
-        stop_search = current_time >= end_time ? true : false;
+        stop_search = current_time >= end_time ? false : false;
     }
 }
 
+/*
 int Negamax(Position *pos, int depth, int ply, LINE *pline)
 {
     LINE line;
@@ -92,7 +97,7 @@ int Negamax(Position *pos, int depth, int ply, LINE *pline)
 
     return max;
 }
-
+*/
 // Quiescence Search
 int QSearch(Position *pos, int ply, int alpha, int beta)
 {
@@ -106,7 +111,7 @@ int QSearch(Position *pos, int ply, int alpha, int beta)
     {
         alpha = evaluation;
     }
-    
+
     int eval;
     MoveList moveList[1];
     generate_qsearch_moves(pos, moveList);
@@ -114,11 +119,11 @@ int QSearch(Position *pos, int ply, int alpha, int beta)
     {
         copy_board();
         make_move(pos, moveList->moves[i].move);
-        
+
         if (!is_check(pos))
         {
             pos->sideToMove ^= 1;
-            
+
             eval = -QSearch(pos, ply + 1, -beta, -alpha);
             if (eval > alpha)
             {
@@ -145,16 +150,27 @@ int QSearch(Position *pos, int ply, int alpha, int beta)
     return alpha;
 }
 
+void check_hash_key_assert(Position *pos, int move, char *territory)
+{
+    uint64_t hash_key_from_scratch = generate_hash_key_from_scratch(pos);
+    if (hash_key_from_scratch != pos->hash_key)
+    {
+
+        printf("Hash keys don't match - %s\n", territory);
+        display_board(pos);
+        printf("Move %d ", move);
+        display_move(move);
+        printf("From scratch key = %" PRIu64 "\n", hash_key_from_scratch);
+        printf("From position key = %" PRIu64 "\n", pos->hash_key);
+        assert(hash_key_from_scratch == pos->hash_key);
+    }
+}
+
 int NegamaxAlphaBeta(Position *pos, int depth, int ply, int alpha, int beta, LINE *pline)
 {
     // display_board(pos);
     LINE line;
-    CheckIfTimeOver();
-    if (stop_search)
-    {
-        pline->cmove = 0;
-        return evaluate(pos);
-    }
+
     if (depth == 0)
     {
         pline->cmove = 0;
@@ -165,34 +181,57 @@ int NegamaxAlphaBeta(Position *pos, int depth, int ply, int alpha, int beta, LIN
     MoveList moveList[1];
     char movePlayed = 0;
     int eval;
+    // Inclusion of hash table.
+    int hash_flag = hashfALPHA;
+
+    if (ply && ((eval = read_hash_entry(depth, alpha, beta, pos->hash_key)) != NO_HASH_FOUND))
+    {
+        return eval;
+    }
+
     generate_moves(pos, moveList);
     for (int i = 0; i < moveList->count; i++)
     {
         copy_board();
-        make_move(pos, moveList->moves[i].move);
+        int move = moveList->moves[i].move;
+        make_move(pos, move);
         // display_move( moveList->moves[i].move);
         if (!is_check(pos))
         {
             pos->sideToMove ^= 1;
+            pos->hash_key ^= side_key;
+            check_hash_key_assert(pos, move, "make_move");
             movePlayed = 1;
             eval = -NegamaxAlphaBeta(pos, depth - 1, ply + 1, -beta, -alpha, &line);
+            CheckIfTimeOver();
+            if (stop_search)
+            {
+                pline->cmove = 0;
+                return evaluate(pos);
+            }
             if (eval > alpha)
             {
+                hash_flag = hashfEXACT;
                 if (eval >= beta)
+                {
+                    write_hash_entry(beta, depth, hashfBETA, pos->hash_key, pos);
                     return beta;
+                }
+
                 alpha = eval;
 
                 if (ply == 0)
                 {
                     if (!stop_search)
-                        best_move = moveList->moves[i].move;
+                        best_move = move;
                 }
-                pline->argmove[0] = moveList->moves[i].move;
+                pline->argmove[0] = move;
                 memcpy(pline->argmove + 1, line.argmove, line.cmove * sizeof(int));
                 pline->cmove = line.cmove + 1;
             }
         }
         take_back();
+        check_hash_key_assert(pos, move, "take_back");
         if (stop_search)
         {
             break;
@@ -205,6 +244,7 @@ int NegamaxAlphaBeta(Position *pos, int depth, int ply, int alpha, int beta, LIN
         return is_check(pos) ? (-MATE_VAL + ply) : 0;
     }
 
+    write_hash_entry(alpha, depth, hash_flag, pos->hash_key,pos);
     return alpha;
 }
 
