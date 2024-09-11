@@ -123,7 +123,7 @@ int QSearch(Position *pos, int ply, int alpha, int beta)
         if (!is_check(pos))
         {
             pos->sideToMove ^= 1;
-
+            pos->hash_key^=side_key;
             eval = -QSearch(pos, ply + 1, -beta, -alpha);
             if (eval > alpha)
             {
