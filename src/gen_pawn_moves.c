@@ -74,7 +74,7 @@ void generate_pawn_captures_and_promotions(const int us, const Position *pos, Mo
     CreatePromotionMoves(pos,(-forwardDirection - 1), pawnCapturesPromoting, moveList);
 }
 
-void generate_pawn_moves(const int us, const Position *pos, MoveList *moveList, const uint64_t emptyBitboard, uint64_t enemyBitboard, int forwardDirection)
+void generate_pawn_moves(const int us, const Position *pos, MoveList *moveList, const uint64_t emptyBitboard, int forwardDirection)
 {
     generate_pawn_non_captures_and_promotions(us, pos, moveList, emptyBitboard, forwardDirection);
 }

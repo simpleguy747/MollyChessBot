@@ -218,7 +218,7 @@ void perft_uci(char *command)
     printf("actual nodes:%ld", nodes);
 }
 
-void bench_uci(char *command)
+void bench_uci()
 {
     UCIHelper uciHelper;
     uciHelper.depth = 7;
@@ -353,7 +353,7 @@ void parseCommand(char *command)
     }
     else if (strncmp(command, "bench", 5) == 0)
     {
-        bench_uci(command);
+        bench_uci();
     }
     else
     {

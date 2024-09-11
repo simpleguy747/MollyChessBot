@@ -4,7 +4,7 @@
 #include "perft_manager.h"
 #define MAX_LINE_LENGTH 1024
 
-int ReadFileLineByLine(char *filePath)
+int ReadFileLineByLine()
 {
     FILE *file;
     char line[MAX_LINE_LENGTH];

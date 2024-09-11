@@ -39,65 +39,6 @@ void CheckIfTimeOver()
     }
 }
 
-/*
-int Negamax(Position *pos, int depth, int ply, LINE *pline)
-{
-    LINE line;
-    CheckIfTimeOver();
-    if (stop_search)
-    {
-        pline->cmove = 0;
-        return evaluate(pos);
-    }
-    if (depth == 0)
-    {
-        pline->cmove = 0;
-        return evaluate(pos);
-    }
-    nodes = nodes + 1;
-    int max = -INF;
-    int eval = max;
-    MoveList moveList[1];
-    char movePlayed = 0;
-    generate_moves(pos, moveList);
-    for (int i = 0; i < moveList->count; i++)
-    {
-        copy_board();
-        make_move(pos, moveList->moves[i].move);
-        if (!is_check(pos))
-        {
-            pos->sideToMove ^= 1;
-            movePlayed = 1;
-            eval = -Negamax(pos, depth - 1, ply + 1, &line);
-        }
-        take_back();
-        if (stop_search)
-        {
-            break;
-        }
-        if (eval > max)
-        {
-            max = eval;
-            if (ply == 0)
-            {
-                if (!stop_search)
-                    best_move = moveList->moves[i].move;
-            }
-            pline->argmove[0] = moveList->moves[i].move;
-            memcpy(pline->argmove + 1, line.argmove, line.cmove * sizeof(int));
-            pline->cmove = line.cmove + 1;
-        }
-    }
-
-    if (movePlayed == 0)
-    {
-        pline->cmove = 0;
-        return is_check(pos) ? (-MATE_VAL + ply) : 0;
-    }
-
-    return max;
-}
-*/
 // Quiescence Search
 int QSearch(Position *pos, int ply, int alpha, int beta)
 {
@@ -123,22 +64,13 @@ int QSearch(Position *pos, int ply, int alpha, int beta)
         if (!is_check(pos))
         {
             pos->sideToMove ^= 1;
-            pos->hash_key^=side_key;
+            pos->hash_key ^= side_key;
             eval = -QSearch(pos, ply + 1, -beta, -alpha);
             if (eval > alpha)
             {
                 if (eval >= beta)
                     return beta;
                 alpha = eval;
-
-                if (ply == 0)
-                {
-                    if (!stop_search)
-                        best_move = moveList->moves[i].move;
-                }
-                // pline->argmove[0] = moveList->moves[i].move;
-                // memcpy(pline->argmove + 1, line.argmove, line.cmove * sizeof(int));
-                // pline->cmove = line.cmove + 1;
             }
         }
         take_back();
@@ -170,6 +102,7 @@ int NegamaxAlphaBeta(Position *pos, int depth, int ply, int alpha, int beta, LIN
 {
     // display_board(pos);
     LINE line;
+    line.cmove = 0;
 
     if (depth == 0)
     {
@@ -214,7 +147,7 @@ int NegamaxAlphaBeta(Position *pos, int depth, int ply, int alpha, int beta, LIN
                 hash_flag = hashfEXACT;
                 if (eval >= beta)
                 {
-                    write_hash_entry(beta, depth, hashfBETA, pos->hash_key, pos);
+                    write_hash_entry(beta, depth, hashfBETA, pos->hash_key);
                     return beta;
                 }
 
@@ -225,6 +158,7 @@ int NegamaxAlphaBeta(Position *pos, int depth, int ply, int alpha, int beta, LIN
                     if (!stop_search)
                         best_move = move;
                 }
+
                 pline->argmove[0] = move;
                 memcpy(pline->argmove + 1, line.argmove, line.cmove * sizeof(int));
                 pline->cmove = line.cmove + 1;
@@ -244,7 +178,7 @@ int NegamaxAlphaBeta(Position *pos, int depth, int ply, int alpha, int beta, LIN
         return is_check(pos) ? (-MATE_VAL + ply) : 0;
     }
 
-    write_hash_entry(alpha, depth, hash_flag, pos->hash_key,pos);
+    write_hash_entry(alpha, depth, hash_flag, pos->hash_key);
     return alpha;
 }
 
@@ -299,60 +233,4 @@ void root_search(UCIHelper *uciHelper, Position *pos)
         }
     }
     printf("bestmove %s\n", bestMoveStr);
-}
-
-int randoms(int lower, int upper)
-{
-    int num = (rand() % (upper - lower + 1)) + lower;
-    return num;
-}
-
-void root_search2(UCIHelper *uciHelper, Position *pos, int depth)
-{
-    MoveList moveList[1];
-
-    int bestMove = -1;
-    char movePlayed = 0;
-    generate_moves(pos, moveList);
-    int eval = -INF;
-    for (int i = 0; i < moveList->count; i++)
-    {
-        int index = randoms(0, moveList->count - 1);
-        // printf("random index :: %d\n", index);
-        copy_board();
-        make_move(pos, moveList->moves[index].move);
-        if (!is_check(pos))
-        {
-            pos->sideToMove ^= 1;
-            bestMove = moveList->moves[index].move;
-            eval = evaluate(pos);
-            movePlayed = 1;
-            break;
-        }
-        take_back();
-    }
-
-    if (movePlayed == 0)
-    {
-        for (int i = 0; i < moveList->count; i++)
-        {
-            copy_board();
-            make_move(pos, moveList->moves[i].move);
-            if (!is_check(pos))
-            {
-                pos->sideToMove ^= 1;
-                bestMove = moveList->moves[i].move;
-                eval = evaluate(pos);
-                movePlayed = 1;
-                break;
-            }
-            take_back();
-        }
-    }
-
-    char bestMoveStr[6];
-    move_str_from_int(bestMove, bestMoveStr);
-    printf("info depth %d nodes %d score cp %d time %d nps %d pv %s\n", 1, 1, eval, 100, 100000, bestMoveStr);
-    printf("bestmove %s\n", bestMoveStr);
-    fflush(stdout);
 }
