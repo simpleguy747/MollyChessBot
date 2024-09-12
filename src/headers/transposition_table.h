@@ -18,12 +18,13 @@ typedef struct HashEntry
     int8_t depth;
     int8_t flag;
     int eval;
+    Position* pos;
 } HashEntry;
 
 extern HashEntry tt[HASH_SIZE];
 
 void clear_hash_table();
-int read_hash_entry(int depth, int alpha, int beta, uint64_t hash_key);
-void write_hash_entry(int eval, int depth, int hash_flag, uint64_t hash_key);
+HashEntry *read_hash_entry(uint64_t hash_key);
+void write_hash_entry(int eval, int depth, int hash_flag, uint64_t hash_key,  Position*pos);
 
 #endif

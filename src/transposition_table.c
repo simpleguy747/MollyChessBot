@@ -9,33 +9,20 @@ void clear_hash_table()
     memset(tt, 0, sizeof(HashEntry) * HASH_SIZE);
 }
 
-int read_hash_entry(int depth, int alpha, int beta, uint64_t hash_key)
+HashEntry *read_hash_entry(uint64_t hash_key)
 {
     int hash_index = hash_key % HASH_SIZE;
     HashEntry *hash_entry = &tt[hash_index];
+
     if (hash_entry->key == hash_key)
     {
-        if (hash_entry->depth >= depth)
-        {
-            if (hash_entry->flag == hashfEXACT)
-            {
-                return hash_entry->eval;
-            }
-            if ((hash_entry->flag == hashfALPHA) && (hash_entry->eval <= alpha))
-            {
-                return alpha;
-            }
-            if ((hash_entry->flag == hashfBETA) && (hash_entry->eval >= beta))
-            {
-                return beta;
-            }
-        }
+        return hash_entry;
     }
 
-    return NO_HASH_FOUND;
+    return NULL;
 }
 
-void write_hash_entry(int eval, int depth, int hash_flag, uint64_t hash_key)
+void write_hash_entry(int eval, int depth, int hash_flag, uint64_t hash_key, Position *pos)
 {
     int hash_index = hash_key % HASH_SIZE;
     HashEntry *hash_entry = &tt[hash_index];
@@ -45,4 +32,5 @@ void write_hash_entry(int eval, int depth, int hash_flag, uint64_t hash_key)
     hash_entry->eval = eval;
     hash_entry->depth = depth;
     hash_entry->flag = hash_flag;
+    hash_entry->pos = pos;
 }
