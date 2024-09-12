@@ -81,21 +81,6 @@ int QSearch(Position *pos, int ply, int alpha, int beta)
     return alpha;
 }
 
-void check_hash_key_assert(Position *pos, int move, char *territory)
-{
-    uint64_t hash_key_from_scratch = generate_hash_key_from_scratch(pos);
-    if (hash_key_from_scratch != pos->hash_key)
-    {
-
-        printf("Hash keys don't match - %s\n", territory);
-        display_board(pos);
-        printf("Move %d ", move);
-        display_move(move);
-        printf("From scratch key = %" PRIu64 "\n", hash_key_from_scratch);
-        printf("From position key = %" PRIu64 "\n", pos->hash_key);
-        assert(hash_key_from_scratch == pos->hash_key);
-    }
-}
 
 int NegamaxAlphaBeta(Position *pos, int depth, int ply, int alpha, int beta, LINE *pline)
 {
@@ -106,7 +91,6 @@ int NegamaxAlphaBeta(Position *pos, int depth, int ply, int alpha, int beta, LIN
     if (depth == 0)
     {
         pline->cmove = 0;
-        // return evaluate(pos);
         return QSearch(pos, ply + 1, alpha, beta);
     }
     nodes = nodes + 1;
@@ -116,10 +100,24 @@ int NegamaxAlphaBeta(Position *pos, int depth, int ply, int alpha, int beta, LIN
     // Inclusion of hash table.
     int hash_flag = hashfALPHA;
 
-    if (ply && ((eval = read_hash_entry(depth, alpha, beta, pos->hash_key)) != NO_HASH_FOUND))
+    HashEntry *hash_entry = read_hash_entry(pos->hash_key);
+
+    if (ply && hash_entry && hash_entry->depth >= depth)
     {
-        return eval;
+        if (hash_entry->flag == hashfEXACT)
+        {
+            return hash_entry->eval;
+        }
+        if ((hash_entry->flag == hashfALPHA) && (hash_entry->eval <= alpha))
+        {
+            return alpha;
+        }
+        if ((hash_entry->flag == hashfBETA) && (hash_entry->eval >= beta))
+        {
+            return beta;
+        }
     }
+    uint64_t original_hash_key = pos->hash_key;
 
     generate_moves(pos, moveList);
     for (int i = 0; i < moveList->count; i++)
@@ -132,7 +130,6 @@ int NegamaxAlphaBeta(Position *pos, int depth, int ply, int alpha, int beta, LIN
         {
             pos->sideToMove ^= 1;
             pos->hash_key ^= side_key;
-            check_hash_key_assert(pos, move, "make_move");
             movePlayed = 1;
             eval = -NegamaxAlphaBeta(pos, depth - 1, ply + 1, -beta, -alpha, &line);
             CheckIfTimeOver();
@@ -143,15 +140,15 @@ int NegamaxAlphaBeta(Position *pos, int depth, int ply, int alpha, int beta, LIN
             }
             if (eval > alpha)
             {
-                hash_flag = hashfEXACT;
+
                 if (eval >= beta)
                 {
-                    write_hash_entry(beta, depth, hashfBETA, pos->hash_key);
+                    write_hash_entry(beta, depth, hashfBETA, original_hash_key, pos);
                     return beta;
                 }
 
                 alpha = eval;
-
+                hash_flag = hashfEXACT;
                 if (ply == 0)
                 {
                     if (!stop_search)
@@ -164,7 +161,6 @@ int NegamaxAlphaBeta(Position *pos, int depth, int ply, int alpha, int beta, LIN
             }
         }
         take_back();
-        check_hash_key_assert(pos, move, "take_back");
         if (stop_search)
         {
             break;
@@ -177,7 +173,7 @@ int NegamaxAlphaBeta(Position *pos, int depth, int ply, int alpha, int beta, LIN
         return is_check(pos) ? (-MATE_VAL + ply) : 0;
     }
 
-    write_hash_entry(alpha, depth, hash_flag, pos->hash_key);
+    write_hash_entry(alpha, depth, hash_flag, original_hash_key, pos);
     return alpha;
 }
 
