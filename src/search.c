@@ -81,7 +81,6 @@ int QSearch(Position *pos, int ply, int alpha, int beta)
     return alpha;
 }
 
-
 int NegamaxAlphaBeta(Position *pos, int depth, int ply, int alpha, int beta, LINE *pline)
 {
     // display_board(pos);
@@ -125,7 +124,6 @@ int NegamaxAlphaBeta(Position *pos, int depth, int ply, int alpha, int beta, LIN
         copy_board();
         int move = moveList->moves[i].move;
         make_move(pos, move);
-        // display_move( moveList->moves[i].move);
         if (!is_check(pos))
         {
             pos->sideToMove ^= 1;
@@ -140,10 +138,9 @@ int NegamaxAlphaBeta(Position *pos, int depth, int ply, int alpha, int beta, LIN
             }
             if (eval > alpha)
             {
-
                 if (eval >= beta)
                 {
-                    write_hash_entry(beta, depth, hashfBETA, original_hash_key, pos);
+                    write_hash_entry(beta, depth, hashfBETA, original_hash_key);
                     return beta;
                 }
 
@@ -173,7 +170,7 @@ int NegamaxAlphaBeta(Position *pos, int depth, int ply, int alpha, int beta, LIN
         return is_check(pos) ? (-MATE_VAL + ply) : 0;
     }
 
-    write_hash_entry(alpha, depth, hash_flag, original_hash_key, pos);
+    write_hash_entry(alpha, depth, hash_flag, original_hash_key);
     return alpha;
 }
 
