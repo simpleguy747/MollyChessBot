@@ -22,7 +22,7 @@ HashEntry *read_hash_entry(uint64_t hash_key)
     return NULL;
 }
 
-void write_hash_entry(int eval, int depth, int hash_flag, uint64_t hash_key, Position *pos)
+void write_hash_entry(int eval, int depth, int hash_flag, uint64_t hash_key)
 {
     int hash_index = hash_key % HASH_SIZE;
     HashEntry *hash_entry = &tt[hash_index];
@@ -32,5 +32,5 @@ void write_hash_entry(int eval, int depth, int hash_flag, uint64_t hash_key, Pos
     hash_entry->eval = eval;
     hash_entry->depth = depth;
     hash_entry->flag = hash_flag;
-    hash_entry->pos = pos;
+    
 }

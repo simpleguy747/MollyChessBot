@@ -25,6 +25,6 @@ extern HashEntry tt[HASH_SIZE];
 
 void clear_hash_table();
 HashEntry *read_hash_entry(uint64_t hash_key);
-void write_hash_entry(int eval, int depth, int hash_flag, uint64_t hash_key,  Position*pos);
+void write_hash_entry(int eval, int depth, int hash_flag, uint64_t hash_key);
 
 #endif

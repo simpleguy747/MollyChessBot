@@ -26,14 +26,22 @@ void CreatePromotionMoves(const Position*pos,int offset, uint64_t movesBitBoard,
     {
         int sqTo = PopLSB(movesBitBoard);
         int sqFrom = sqTo + offset;
-        moveList->moves[moveList->count++].move = ENCODE_MOVE(MOVE_TYPE_PROMOTION_QUEEN, sqFrom, sqTo);
+        
+        moveList->moves[moveList->count].move = ENCODE_MOVE(MOVE_TYPE_PROMOTION_QUEEN, sqFrom, sqTo);
         calculate_mvv_lva(pos,&moveList->moves[moveList->count]);
-        moveList->moves[moveList->count++].move = ENCODE_MOVE(MOVE_TYPE_PROMOTION_ROOK, sqFrom, sqTo);
+        moveList->count=moveList->count+1;
+
+        moveList->moves[moveList->count].move = ENCODE_MOVE(MOVE_TYPE_PROMOTION_ROOK, sqFrom, sqTo);
         calculate_mvv_lva(pos,&moveList->moves[moveList->count]);
-        moveList->moves[moveList->count++].move = ENCODE_MOVE(MOVE_TYPE_PROMOTION_BISHOP, sqFrom, sqTo);
+        moveList->count=moveList->count+1;
+        
+        moveList->moves[moveList->count].move = ENCODE_MOVE(MOVE_TYPE_PROMOTION_BISHOP, sqFrom, sqTo);
         calculate_mvv_lva(pos,&moveList->moves[moveList->count]);
-        moveList->moves[moveList->count++].move = ENCODE_MOVE(MOVE_TYPE_PROMOTION_KNIGHT, sqFrom, sqTo);
+        moveList->count=moveList->count+1;
+        
+        moveList->moves[moveList->count].move = ENCODE_MOVE(MOVE_TYPE_PROMOTION_KNIGHT, sqFrom, sqTo);
         calculate_mvv_lva(pos,&moveList->moves[moveList->count]);
+        moveList->count=moveList->count+1;
     }
 }
 
