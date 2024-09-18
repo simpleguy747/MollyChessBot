@@ -23,8 +23,10 @@ typedef struct HashEntry
 
 extern HashEntry tt[HASH_SIZE];
 
+extern uint64_t RepetitionTable[1024];
+extern int repetition_index;
 void clear_hash_table();
 HashEntry *read_hash_entry(uint64_t hash_key);
-void write_hash_entry(int eval, int depth, int hash_flag, uint64_t hash_key);
+void write_hash_entry(int eval, int depth, int hash_flag, uint64_t hash_key,int ply);
 
 #endif

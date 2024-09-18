@@ -14,14 +14,24 @@
 #include "assert.h"
 #include "perft_manager.h"
 #include "bench.h"
-
+#include "transposition_table.h"
+#include "zobrist.h"
 Position pos[1];
+UCIHelper uciHelper;
 // Main function
+void init_uci()
+{
+    uciHelper.wtime = 0;
+    uciHelper.btime = 0;
+    uciHelper.winc = 0;
+    uciHelper.binc = 0;
+    uciHelper.depth = 0;
+}
 int uci_loop()
 {
     char command[1024];
     init_magics_all();
-
+    init_uci();
     // Main loop to read commands
     while (1)
     {
@@ -113,6 +123,7 @@ void position(char *command)
     // Process moves if any
     if (command)
     {
+        repetition_index = 0;
         command[strcspn(command, "\n")] = '\0';
         char *moveStr = strtok(command, " ");
 
@@ -140,6 +151,7 @@ void position(char *command)
                     make_move(pos, moveList.moves[index].move);
                     pos->sideToMove ^= 1;
                     moveMade = 1;
+
                     break;
                 }
             }
@@ -147,6 +159,8 @@ void position(char *command)
             // display_board(pos);
             // printf("\n");
             assert(moveMade != 0);
+            RepetitionTable[repetition_index] = generate_hash_key_from_scratch(pos);
+            repetition_index = repetition_index + 1;
             moveStr = strtok(NULL, " ");
         }
     }
@@ -155,7 +169,7 @@ void position(char *command)
 // Handle the 'go' command
 void go(char *command)
 {
-    UCIHelper uciHelper;
+
     const char *delimiters = " \t\n";
     char *token = strtok(command, delimiters);
     // Loop through the tokens
@@ -286,24 +300,24 @@ void bench_uci()
     int fen_length = sizeof(fens) / sizeof(fens[0]);
     // for (int i1 = 0; i1 < 20; i1++)
     // {
-        uint64_t cumulative_nodes = 0;
-        long long t_start = get_current_time_in_milliseconds();
-        for (int i = 0; i < fen_length; i++)
-        {
-            ucinewgame();
-            set_board_from_fen(fens[i], pos);
-            uint64_t nodes = bench(&uciHelper, pos);
-            cumulative_nodes = cumulative_nodes + nodes;
-            printf("\n");
-        }
-        long long t_end = get_current_time_in_milliseconds();
+    uint64_t cumulative_nodes = 0;
+    long long t_start = get_current_time_in_milliseconds();
+    for (int i = 0; i < fen_length; i++)
+    {
+        ucinewgame();
+        set_board_from_fen(fens[i], pos);
+        uint64_t nodes = bench(&uciHelper, pos);
+        cumulative_nodes = cumulative_nodes + nodes;
+        printf("\n");
+    }
+    long long t_end = get_current_time_in_milliseconds();
 
-        double elapsed_seconds = (1.0 * (t_end - t_start)) / 1000;
-        printf("\n===================================\n");
-        printf("info string %lf seconds\n", elapsed_seconds);
-        printf("info string %ld nodes %lf nps\n", cumulative_nodes, ((1.0 * cumulative_nodes) / elapsed_seconds));
-        // c_nodes[i1] = cumulative_nodes;
-        // times[i1]=elapsed_seconds;
+    double elapsed_seconds = (1.0 * (t_end - t_start)) / 1000;
+    printf("\n===================================\n");
+    printf("info string %lf seconds\n", elapsed_seconds);
+    printf("info string %ld nodes %lf nps\n", cumulative_nodes, ((1.0 * cumulative_nodes) / elapsed_seconds));
+    // c_nodes[i1] = cumulative_nodes;
+    // times[i1]=elapsed_seconds;
     // }
 
     // for(int j=0;j<20;j++){

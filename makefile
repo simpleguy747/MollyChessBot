@@ -27,7 +27,7 @@ EXEC := mollybot
 
 all: clean debug
 
-debug-exe: clean debug execute
+debug-exe: clean debug
 
 release-exe: clean release execute-release
 

@@ -21,24 +21,27 @@
 #include "transposition_table.h"
 int main()
 {
-  // uci_loop();
+   uci_loop();
+  // display_move(593);
+  // display_move(3299);
+  // Position pos[1];
+  // init_all(pos);
+  // init_magics_all();
 
-  Position pos[1];
-  init_all(pos);
-  init_magics_all();
+  // set_board_from_fen("r1b1kb1N/pppnq1pB/8/8/3Pp3/8/PPPK2PP/RNB5 w q - 0 12", pos);
+  // // set_board_from_fen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1", pos);
+  
+  // UCIHelper uciHelper[1];
 
-  set_board_from_fen("8/k7/3p4/p2P1p2/P2P1P2/8/8/K7 w - - 0 1", pos);
-  UCIHelper uciHelper[1];
+  // uciHelper->wtime = 300000000;
+  // uciHelper->btime = 300000000;
+  // uciHelper->winc = 100000;
+  // uciHelper->binc = 100000;
+  // uciHelper->depth = 0;
 
-  uciHelper->wtime = 300000000;
-  uciHelper->btime = 300000000;
-  uciHelper->winc = 100000;
-  uciHelper->binc = 100000;
-  uciHelper->depth = 0;
+  // clear_hash_table();
 
-  clear_hash_table();
-
-  root_search(uciHelper, pos);
+  // root_search(uciHelper, pos);
 
   return 0;
 }

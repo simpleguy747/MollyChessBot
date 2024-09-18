@@ -11,5 +11,6 @@ void root_search(UCIHelper *uciHelper, Position *pos);
 #define ALPHA -INF
 #define BETA INF
 #define MATE_VAL 9999
+#define MATE_SCORE 9000
 
 #endif
