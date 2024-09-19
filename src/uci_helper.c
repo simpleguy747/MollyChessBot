@@ -29,7 +29,7 @@ void init_uci()
 }
 int uci_loop()
 {
-    char command[1024];
+    char command[4096];
     init_magics_all();
     init_uci();
     // Main loop to read commands
@@ -123,6 +123,9 @@ void position(char *command)
     // Process moves if any
     if (command)
     {
+        int index_1 = 1;
+        display_board(pos);
+        printf("\n");
         repetition_index = 0;
         command[strcspn(command, "\n")] = '\0';
         char *moveStr = strtok(command, " ");
@@ -136,6 +139,10 @@ void position(char *command)
             int moveMade = 0;
             for (int index = 0; index < moveList.count; index++)
             {
+                if (index_1 == 158)
+                {
+                    printf("index:%d\n", index);
+                }
                 if (moveStr[4] != '\0')
                 {
                     if ((moveList.moves[index].move) == moveInt)
@@ -161,6 +168,10 @@ void position(char *command)
             assert(moveMade != 0);
             RepetitionTable[repetition_index] = generate_hash_key_from_scratch(pos);
             repetition_index = repetition_index + 1;
+            display_board(pos);
+            printf("%d %s\n", index_1++, moveStr);
+
+            printf("\n");
             moveStr = strtok(NULL, " ");
         }
     }
