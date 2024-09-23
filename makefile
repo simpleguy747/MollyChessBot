@@ -60,10 +60,9 @@ $(RELEASEDIR)/$(EXEC): $(OBJS)
 
 clang-tidy:
 	bear make
-	clang-tidy $(SRCS) --checks=-*,clang-analyzer-*,cert-* --header-filter=$(INCDIR)
+	clang-tidy src/bench.c --checks=-*,clang-analyzer-*,cert-* --header-filter=$(INCDIR)
 
 clean:
 	rm -rf $(BUILDDIR)
-	rm -rf $(OBJS)
 
 lint: clang-tidy

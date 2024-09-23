@@ -31,5 +31,3 @@ long long get_current_time_in_milliseconds()
   gettimeofday(&currentTime, NULL);
   return currentTime.tv_sec * 1000LL + currentTime.tv_usec / 1000LL;
 }
-
-

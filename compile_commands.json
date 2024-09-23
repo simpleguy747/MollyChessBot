@@ -312,22 +312,6 @@
       "-Isrc/headers",
       "-c",
       "-o",
-      "src/tests/perft_tests.o",
-      "src/tests/perft_tests.c"
-    ],
-    "directory": "/home/gb/My/MollyChessBot",
-    "file": "/home/gb/My/MollyChessBot/src/tests/perft_tests.c",
-    "output": "/home/gb/My/MollyChessBot/src/tests/perft_tests.o"
-  },
-  {
-    "arguments": [
-      "/usr/bin/clang",
-      "-Wall",
-      "-Wextra",
-      "-Wpedantic",
-      "-Isrc/headers",
-      "-c",
-      "-o",
       "src/gen_king_moves.o",
       "src/gen_king_moves.c"
     ],

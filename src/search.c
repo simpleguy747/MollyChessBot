@@ -249,12 +249,12 @@ void root_search(UCIHelper *uciHelper, Position *pos)
         {
             move_str_from_int(best_move, bestMoveStr);
             printf("info depth %d nodes %ld score cp %d time %lld nps %lld", d, nodes, eval, (t_end - t_start), ((nodes * 1000) / (t_end - t_start + 1)));
-            printf(" pv ");
+            printf(" pv");
             for (int i = 0; i < pvLine.cmove; i++)
             {
                 char moveStr[6];
                 move_str_from_int(pvLine.argmove[i], moveStr); // Assuming you have a function to convert moves to string
-                printf("%s ", moveStr);
+                printf(" %s", moveStr);
             }
             printf("\n");
             fflush(stdout);

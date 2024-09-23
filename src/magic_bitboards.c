@@ -124,9 +124,8 @@ uint64_t GetSlidingAttacksBishop(int sq, uint64_t block)
 // Code is taken from stockfish.
 void InitMagics(int pieceType, uint64_t *table, Magic *magics)
 {
-
     uint64_t occupancy[4096], reference[4096], edges, b;
-    int epoch[4096] = {}, cnt = 0, size = 0;
+    int epoch[4096] = {0}, cnt = 0, size = 0;
 
     for (int s = SQ_A1; s <= SQ_H8; s++)
     {
