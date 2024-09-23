@@ -7,7 +7,7 @@
 
 // const int MaterialValue[] = {0, 100, 300, 315, 500, 900, 1000};
 
-const int16_t PieceSquareTables[] = {
+const int16_t PieceSquareTablesMG[] = {
     // PAWNS
     0, 0, 0, 0, 0, 0, 0, 0,
     105, 110, 110, 80, 80, 110, 110, 105,
@@ -68,9 +68,74 @@ const int16_t PieceSquareTables[] = {
     -30, -40, -40, -50, -50, -40, -40, -30,
     -30, -40, -40, -50, -50, -40, -40, -30};
 
+const int16_t PieceSquareTablesEG[] = {
+    // PAWNS
+    0, 0, 0, 0, 0, 0, 0, 0,
+    105, 110, 110, 80, 80, 110, 110, 105,
+    105, 95, 90, 100, 100, 90, 95, 105,
+    100, 100, 100, 120, 120, 100, 100, 100,
+    105, 105, 110, 125, 125, 110, 105, 105,
+    110, 110, 120, 130, 130, 120, 110, 110,
+    150, 150, 150, 150, 150, 150, 150, 150,
+    0, 0, 0, 0, 0, 0, 0, 0,
+
+    // Knights
+    250, 260, 270, 270, 270, 270, 260, 250,
+    260, 280, 300, 305, 305, 300, 280, 260,
+    270, 305, 310, 315, 315, 310, 305, 270,
+    270, 300, 315, 320, 320, 315, 300, 270,
+    270, 305, 315, 320, 320, 315, 305, 270,
+    270, 300, 310, 315, 315, 310, 300, 270,
+    260, 280, 300, 300, 300, 300, 280, 260,
+    250, 260, 270, 270, 270, 270, 260, 250,
+
+    // Bishops
+    295, 305, 305, 305, 305, 305, 305, 295,
+    305, 320, 315, 315, 315, 315, 320, 305,
+    305, 325, 325, 325, 325, 325, 325, 305,
+    305, 315, 325, 325, 325, 325, 315, 305,
+    305, 320, 320, 325, 325, 320, 320, 305,
+    305, 315, 320, 325, 325, 320, 315, 305,
+    305, 315, 315, 315, 315, 315, 315, 305,
+    295, 305, 305, 305, 305, 305, 305, 295,
+
+    // Rooks
+    500, 500, 500, 505, 505, 500, 500, 500,
+    495, 500, 500, 500, 500, 500, 500, 495,
+    495, 500, 500, 500, 500, 500, 500, 495,
+    495, 500, 500, 500, 500, 500, 500, 495,
+    495, 500, 500, 500, 500, 500, 500, 495,
+    495, 500, 500, 500, 500, 500, 500, 495,
+    505, 510, 510, 510, 510, 510, 510, 505,
+    500, 500, 500, 500, 500, 500, 500, 500,
+
+    // Queen
+    880, 890, 890, 895, 895, 890, 890, 880,
+    890, 900, 905, 900, 900, 900, 900, 890,
+    890, 905, 905, 905, 905, 905, 900, 890,
+    900, 900, 905, 905, 905, 905, 900, 895,
+    895, 900, 905, 905, 905, 905, 900, 895,
+    890, 900, 905, 905, 905, 905, 900, 890,
+    890, 900, 900, 900, 900, 900, 900, 890,
+    880, 890, 890, 895, 895, 890, 890, 880,
+
+    // King.
+    20, 30, 10, 0, 0, 10, 30, 20,
+    20, 20, 0, 0, 0, 0, 20, 20,
+    -10, -20, -20, -20, -20, -20, -20, -10,
+    -20, -30, -30, -40, -40, -30, -30, -20,
+    -30, -40, -40, -50, -50, -40, -40, -30,
+    -30, -40, -40, -50, -50, -40, -40, -30,
+    -30, -40, -40, -50, -50, -40, -40, -30,
+    -30, -40, -40, -50, -50, -40, -40, -30};
+
+const char gamephaseInc[6] = {0, 1, 1, 2, 4, 0};
+
 int evaluate(Position *pos)
 {
-    int eval_by_color[2] = {0, 0};
+    int mg_eval_by_color[2] = {0, 0};
+    int eg_eval_by_color[2] = {0, 0};
+    int8_t gamePhase = 0;
     for (int color = COLOR_WHITE; color <= COLOR_BLACK; color++)
     {
         for (int pt = PAWN; pt < KING; pt++)
@@ -84,13 +149,25 @@ int evaluate(Position *pos)
                 {
                     index ^= 56;
                 }
-                eval_by_color[color] += PieceSquareTables[index];
-
+                mg_eval_by_color[color] += PieceSquareTablesMG[index];
+                eg_eval_by_color[color] += PieceSquareTablesEG[index];
                 piece_of_color &= piece_of_color - 1;
             }
             // eval_by_color[color] += count_pieces * MaterialValue[pt];
         }
     }
 
-    return (eval_by_color[COLOR_WHITE] - eval_by_color[COLOR_BLACK]) * (1 - (2 * pos->sideToMove));
+    /* tapered eval */
+    int mgScore = mg_eval_by_color[COLOR_WHITE] - mg_eval_by_color[COLOR_BLACK];
+    int egScore = eg_eval_by_color[COLOR_WHITE] - eg_eval_by_color[COLOR_BLACK];
+    int mgPhase = gamePhase;
+    if (mgPhase > 24)
+    {
+        mgPhase = 24; /* in case of early promotion */
+    }
+
+    int egPhase = 24 - mgPhase;
+    int white_perspective_score = (mgScore * mgPhase + egScore * egPhase) / 24;
+    return white_perspective_score;
+    // return (eval_by_color[COLOR_WHITE] - eval_by_color[COLOR_BLACK]) * (1 - (2 * pos->sideToMove));
 }

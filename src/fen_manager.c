@@ -12,7 +12,7 @@
 #include <string.h>
 #include "zobrist.h"
 #include "transposition_table.h"
-
+#include "display.h"
 // Set the board as per the pieces and update the pieces and occupancy_by_color bitboards better.
 void SetBoard(char *fen, Position *pos)
 {
@@ -38,6 +38,7 @@ void SetBoard(char *fen, Position *pos)
         }
         ptr++;
     }
+    
 }
 
 void UpdateBitBoards(Position *pos)

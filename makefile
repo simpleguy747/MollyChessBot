@@ -3,27 +3,33 @@ CC := clang
 
 # Directories
 SRCDIR := src
-INCDIR := src/headers
+INCDIR := $(SRCDIR)/headers
 BUILDDIR := dist
 DEBUGDIR := $(BUILDDIR)/debug
 RELEASEDIR := $(BUILDDIR)/release
 
 # Flags
-CFLAGS := -Wall -Wextra -I $(INCDIR)
+CFLAGS := -Wall -Wextra -WPedantic -I$(INCDIR)
 DEBUGFLAGS := -g -fsanitize=undefined
-# DEBUGFLAGS := -g -fsanitize=address
-# DEBUGFLAGS := -g -fsanitize=memory
-# DEBUGFLAGS := -g -fsanitize=dataflow
-# DEBUGFLAGS := -g -fsanitize=leak
 RELEASEFLAGS := -O3
+
+# Sanitizers (choose one)
+# DEBUGFLAGS += -fsanitize=address
+# DEBUGFLAGS += -fsanitize=memory
+# DEBUGFLAGS += -fsanitize=dataflow
+# DEBUGFLAGS += -fsanitize=leak
+
 # Source files
 SRCS := $(shell find $(SRCDIR) -name '*.c')
+
+# Object files
+OBJS := $(SRCS:.c=.o)
 
 # Executable name
 EXEC := mollybot
 
 # Targets
-.PHONY: all clean debug release
+.PHONY: all clean debug release clang-tidy
 
 all: clean debug
 
@@ -41,13 +47,22 @@ debug: $(DEBUGDIR)/$(EXEC)
 
 release: $(RELEASEDIR)/$(EXEC)
 
-$(DEBUGDIR)/$(EXEC): $(SRCS)
+$(DEBUGDIR)/$(EXEC): $(OBJS)
 	mkdir -p $(DEBUGDIR)
 	$(CC) $(CFLAGS) $(DEBUGFLAGS) $^ -o $@
 
-$(RELEASEDIR)/$(EXEC): $(SRCS)
+$(RELEASEDIR)/$(EXEC): $(OBJS)
 	mkdir -p $(RELEASEDIR)
 	$(CC) $(CFLAGS) $(RELEASEFLAGS) $^ -o $@
 
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+clang-tidy:
+	bear make
+	clang-tidy $(SRCS) --checks=-*,clang-analyzer-*,cert-* --header-filter=$(INCDIR)
+
 clean:
 	rm -rf $(BUILDDIR)
+
+lint: clang-tidy

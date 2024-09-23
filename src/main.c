@@ -19,9 +19,11 @@
 #include "squares.h"
 #include "perft_manager.h"
 #include "transposition_table.h"
+#include "tuner.h"
 int main()
 {
-   uci_loop();
+  //tune();
+    uci_loop();
   // display_move(593);
   // display_move(3299);
   // Position pos[1];
