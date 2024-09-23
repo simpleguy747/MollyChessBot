@@ -7,3 +7,4 @@ void calculate_mvv_lva(const Position *position, Move* move_param);
 
 #endif
 
+

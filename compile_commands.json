@@ -1,1 +1,498 @@
-[]
+[
+  {
+    "arguments": [
+      "/usr/bin/clang",
+      "-Wall",
+      "-Wextra",
+      "-Wpedantic",
+      "-Isrc/headers",
+      "-c",
+      "-o",
+      "src/bench.o",
+      "src/bench.c"
+    ],
+    "directory": "/home/gb/My/MollyChessBot",
+    "file": "/home/gb/My/MollyChessBot/src/bench.c",
+    "output": "/home/gb/My/MollyChessBot/src/bench.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/clang",
+      "-Wall",
+      "-Wextra",
+      "-Wpedantic",
+      "-Isrc/headers",
+      "-c",
+      "-o",
+      "src/castling_permissions.o",
+      "src/castling_permissions.c"
+    ],
+    "directory": "/home/gb/My/MollyChessBot",
+    "file": "/home/gb/My/MollyChessBot/src/castling_permissions.c",
+    "output": "/home/gb/My/MollyChessBot/src/castling_permissions.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/clang",
+      "-Wall",
+      "-Wextra",
+      "-Wpedantic",
+      "-Isrc/headers",
+      "-c",
+      "-o",
+      "src/gen_bishop_moves.o",
+      "src/gen_bishop_moves.c"
+    ],
+    "directory": "/home/gb/My/MollyChessBot",
+    "file": "/home/gb/My/MollyChessBot/src/gen_bishop_moves.c",
+    "output": "/home/gb/My/MollyChessBot/src/gen_bishop_moves.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/clang",
+      "-Wall",
+      "-Wextra",
+      "-Wpedantic",
+      "-Isrc/headers",
+      "-c",
+      "-o",
+      "src/position.o",
+      "src/position.c"
+    ],
+    "directory": "/home/gb/My/MollyChessBot",
+    "file": "/home/gb/My/MollyChessBot/src/position.c",
+    "output": "/home/gb/My/MollyChessBot/src/position.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/clang",
+      "-Wall",
+      "-Wextra",
+      "-Wpedantic",
+      "-Isrc/headers",
+      "-c",
+      "-o",
+      "src/attacks.o",
+      "src/attacks.c"
+    ],
+    "directory": "/home/gb/My/MollyChessBot",
+    "file": "/home/gb/My/MollyChessBot/src/attacks.c",
+    "output": "/home/gb/My/MollyChessBot/src/attacks.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/clang",
+      "-Wall",
+      "-Wextra",
+      "-Wpedantic",
+      "-Isrc/headers",
+      "-c",
+      "-o",
+      "src/gen_rook_moves.o",
+      "src/gen_rook_moves.c"
+    ],
+    "directory": "/home/gb/My/MollyChessBot",
+    "file": "/home/gb/My/MollyChessBot/src/gen_rook_moves.c",
+    "output": "/home/gb/My/MollyChessBot/src/gen_rook_moves.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/clang",
+      "-Wall",
+      "-Wextra",
+      "-Wpedantic",
+      "-Isrc/headers",
+      "-c",
+      "-o",
+      "src/display.o",
+      "src/display.c"
+    ],
+    "directory": "/home/gb/My/MollyChessBot",
+    "file": "/home/gb/My/MollyChessBot/src/display.c",
+    "output": "/home/gb/My/MollyChessBot/src/display.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/clang",
+      "-Wall",
+      "-Wextra",
+      "-Wpedantic",
+      "-Isrc/headers",
+      "-c",
+      "-o",
+      "src/attack_manager.o",
+      "src/attack_manager.c"
+    ],
+    "directory": "/home/gb/My/MollyChessBot",
+    "file": "/home/gb/My/MollyChessBot/src/attack_manager.c",
+    "output": "/home/gb/My/MollyChessBot/src/attack_manager.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/clang",
+      "-Wall",
+      "-Wextra",
+      "-Wpedantic",
+      "-Isrc/headers",
+      "-c",
+      "-o",
+      "src/squares.o",
+      "src/squares.c"
+    ],
+    "directory": "/home/gb/My/MollyChessBot",
+    "file": "/home/gb/My/MollyChessBot/src/squares.c",
+    "output": "/home/gb/My/MollyChessBot/src/squares.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/clang",
+      "-Wall",
+      "-Wextra",
+      "-Wpedantic",
+      "-Isrc/headers",
+      "-c",
+      "-o",
+      "src/movegen.o",
+      "src/movegen.c"
+    ],
+    "directory": "/home/gb/My/MollyChessBot",
+    "file": "/home/gb/My/MollyChessBot/src/movegen.c",
+    "output": "/home/gb/My/MollyChessBot/src/movegen.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/clang",
+      "-Wall",
+      "-Wextra",
+      "-Wpedantic",
+      "-Isrc/headers",
+      "-c",
+      "-o",
+      "src/main.o",
+      "src/main.c"
+    ],
+    "directory": "/home/gb/My/MollyChessBot",
+    "file": "/home/gb/My/MollyChessBot/src/main.c",
+    "output": "/home/gb/My/MollyChessBot/src/main.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/clang",
+      "-Wall",
+      "-Wextra",
+      "-Wpedantic",
+      "-Isrc/headers",
+      "-c",
+      "-o",
+      "src/utilities.o",
+      "src/utilities.c"
+    ],
+    "directory": "/home/gb/My/MollyChessBot",
+    "file": "/home/gb/My/MollyChessBot/src/utilities.c",
+    "output": "/home/gb/My/MollyChessBot/src/utilities.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/clang",
+      "-Wall",
+      "-Wextra",
+      "-Wpedantic",
+      "-Isrc/headers",
+      "-c",
+      "-o",
+      "src/gen_queen_moves.o",
+      "src/gen_queen_moves.c"
+    ],
+    "directory": "/home/gb/My/MollyChessBot",
+    "file": "/home/gb/My/MollyChessBot/src/gen_queen_moves.c",
+    "output": "/home/gb/My/MollyChessBot/src/gen_queen_moves.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/clang",
+      "-Wall",
+      "-Wextra",
+      "-Wpedantic",
+      "-Isrc/headers",
+      "-c",
+      "-o",
+      "src/perft_manager.o",
+      "src/perft_manager.c"
+    ],
+    "directory": "/home/gb/My/MollyChessBot",
+    "file": "/home/gb/My/MollyChessBot/src/perft_manager.c",
+    "output": "/home/gb/My/MollyChessBot/src/perft_manager.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/clang",
+      "-Wall",
+      "-Wextra",
+      "-Wpedantic",
+      "-Isrc/headers",
+      "-c",
+      "-o",
+      "src/init.o",
+      "src/init.c"
+    ],
+    "directory": "/home/gb/My/MollyChessBot",
+    "file": "/home/gb/My/MollyChessBot/src/init.c",
+    "output": "/home/gb/My/MollyChessBot/src/init.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/clang",
+      "-Wall",
+      "-Wextra",
+      "-Wpedantic",
+      "-Isrc/headers",
+      "-c",
+      "-o",
+      "src/magic_bitboards.o",
+      "src/magic_bitboards.c"
+    ],
+    "directory": "/home/gb/My/MollyChessBot",
+    "file": "/home/gb/My/MollyChessBot/src/magic_bitboards.c",
+    "output": "/home/gb/My/MollyChessBot/src/magic_bitboards.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/clang",
+      "-Wall",
+      "-Wextra",
+      "-Wpedantic",
+      "-Isrc/headers",
+      "-c",
+      "-o",
+      "src/uci_helper.o",
+      "src/uci_helper.c"
+    ],
+    "directory": "/home/gb/My/MollyChessBot",
+    "file": "/home/gb/My/MollyChessBot/src/uci_helper.c",
+    "output": "/home/gb/My/MollyChessBot/src/uci_helper.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/clang",
+      "-Wall",
+      "-Wextra",
+      "-Wpedantic",
+      "-Isrc/headers",
+      "-c",
+      "-o",
+      "src/gen_knight_moves.o",
+      "src/gen_knight_moves.c"
+    ],
+    "directory": "/home/gb/My/MollyChessBot",
+    "file": "/home/gb/My/MollyChessBot/src/gen_knight_moves.c",
+    "output": "/home/gb/My/MollyChessBot/src/gen_knight_moves.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/clang",
+      "-Wall",
+      "-Wextra",
+      "-Wpedantic",
+      "-Isrc/headers",
+      "-c",
+      "-o",
+      "src/fen_manager.o",
+      "src/fen_manager.c"
+    ],
+    "directory": "/home/gb/My/MollyChessBot",
+    "file": "/home/gb/My/MollyChessBot/src/fen_manager.c",
+    "output": "/home/gb/My/MollyChessBot/src/fen_manager.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/clang",
+      "-Wall",
+      "-Wextra",
+      "-Wpedantic",
+      "-Isrc/headers",
+      "-c",
+      "-o",
+      "src/tests/perft_tests.o",
+      "src/tests/perft_tests.c"
+    ],
+    "directory": "/home/gb/My/MollyChessBot",
+    "file": "/home/gb/My/MollyChessBot/src/tests/perft_tests.c",
+    "output": "/home/gb/My/MollyChessBot/src/tests/perft_tests.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/clang",
+      "-Wall",
+      "-Wextra",
+      "-Wpedantic",
+      "-Isrc/headers",
+      "-c",
+      "-o",
+      "src/gen_king_moves.o",
+      "src/gen_king_moves.c"
+    ],
+    "directory": "/home/gb/My/MollyChessBot",
+    "file": "/home/gb/My/MollyChessBot/src/gen_king_moves.c",
+    "output": "/home/gb/My/MollyChessBot/src/gen_king_moves.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/clang",
+      "-Wall",
+      "-Wextra",
+      "-Wpedantic",
+      "-Isrc/headers",
+      "-c",
+      "-o",
+      "src/move_manager.o",
+      "src/move_manager.c"
+    ],
+    "directory": "/home/gb/My/MollyChessBot",
+    "file": "/home/gb/My/MollyChessBot/src/move_manager.c",
+    "output": "/home/gb/My/MollyChessBot/src/move_manager.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/clang",
+      "-Wall",
+      "-Wextra",
+      "-Wpedantic",
+      "-Isrc/headers",
+      "-c",
+      "-o",
+      "src/gen_pawn_moves.o",
+      "src/gen_pawn_moves.c"
+    ],
+    "directory": "/home/gb/My/MollyChessBot",
+    "file": "/home/gb/My/MollyChessBot/src/gen_pawn_moves.c",
+    "output": "/home/gb/My/MollyChessBot/src/gen_pawn_moves.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/clang",
+      "-Wall",
+      "-Wextra",
+      "-Wpedantic",
+      "-Isrc/headers",
+      "-c",
+      "-o",
+      "src/transposition_table.o",
+      "src/transposition_table.c"
+    ],
+    "directory": "/home/gb/My/MollyChessBot",
+    "file": "/home/gb/My/MollyChessBot/src/transposition_table.c",
+    "output": "/home/gb/My/MollyChessBot/src/transposition_table.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/clang",
+      "-Wall",
+      "-Wextra",
+      "-Wpedantic",
+      "-Isrc/headers",
+      "-c",
+      "-o",
+      "src/search.o",
+      "src/search.c"
+    ],
+    "directory": "/home/gb/My/MollyChessBot",
+    "file": "/home/gb/My/MollyChessBot/src/search.c",
+    "output": "/home/gb/My/MollyChessBot/src/search.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/clang",
+      "-Wall",
+      "-Wextra",
+      "-Wpedantic",
+      "-Isrc/headers",
+      "-c",
+      "-o",
+      "src/gen_moves_base.o",
+      "src/gen_moves_base.c"
+    ],
+    "directory": "/home/gb/My/MollyChessBot",
+    "file": "/home/gb/My/MollyChessBot/src/gen_moves_base.c",
+    "output": "/home/gb/My/MollyChessBot/src/gen_moves_base.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/clang",
+      "-Wall",
+      "-Wextra",
+      "-Wpedantic",
+      "-Isrc/headers",
+      "-c",
+      "-o",
+      "src/prng.o",
+      "src/prng.c"
+    ],
+    "directory": "/home/gb/My/MollyChessBot",
+    "file": "/home/gb/My/MollyChessBot/src/prng.c",
+    "output": "/home/gb/My/MollyChessBot/src/prng.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/clang",
+      "-Wall",
+      "-Wextra",
+      "-Wpedantic",
+      "-Isrc/headers",
+      "-c",
+      "-o",
+      "src/mvvlva.o",
+      "src/mvvlva.c"
+    ],
+    "directory": "/home/gb/My/MollyChessBot",
+    "file": "/home/gb/My/MollyChessBot/src/mvvlva.c",
+    "output": "/home/gb/My/MollyChessBot/src/mvvlva.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/clang",
+      "-Wall",
+      "-Wextra",
+      "-Wpedantic",
+      "-Isrc/headers",
+      "-c",
+      "-o",
+      "src/eval.o",
+      "src/eval.c"
+    ],
+    "directory": "/home/gb/My/MollyChessBot",
+    "file": "/home/gb/My/MollyChessBot/src/eval.c",
+    "output": "/home/gb/My/MollyChessBot/src/eval.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/clang",
+      "-Wall",
+      "-Wextra",
+      "-Wpedantic",
+      "-Isrc/headers",
+      "-c",
+      "-o",
+      "src/zobrist.o",
+      "src/zobrist.c"
+    ],
+    "directory": "/home/gb/My/MollyChessBot",
+    "file": "/home/gb/My/MollyChessBot/src/zobrist.c",
+    "output": "/home/gb/My/MollyChessBot/src/zobrist.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/clang",
+      "-Wall",
+      "-Wextra",
+      "-Wpedantic",
+      "-Isrc/headers",
+      "-c",
+      "-o",
+      "src/tuner.o",
+      "src/tuner.c"
+    ],
+    "directory": "/home/gb/My/MollyChessBot",
+    "file": "/home/gb/My/MollyChessBot/src/tuner.c",
+    "output": "/home/gb/My/MollyChessBot/src/tuner.o"
+  }
+]

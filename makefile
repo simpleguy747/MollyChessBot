@@ -9,7 +9,7 @@ DEBUGDIR := $(BUILDDIR)/debug
 RELEASEDIR := $(BUILDDIR)/release
 
 # Flags
-CFLAGS := -Wall -Wextra -WPedantic -I$(INCDIR)
+CFLAGS := -Wall -Wextra -Wpedantic -I$(INCDIR)
 DEBUGFLAGS := -g -fsanitize=undefined
 RELEASEFLAGS := -O3
 
@@ -64,5 +64,6 @@ clang-tidy:
 
 clean:
 	rm -rf $(BUILDDIR)
+	rm -rf $(OBJS)
 
 lint: clang-tidy
