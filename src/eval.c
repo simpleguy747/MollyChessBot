@@ -129,7 +129,7 @@ const int16_t PieceSquareTablesEG[] = {
     -30, -40, -40, -50, -50, -40, -40, -30,
     -30, -40, -40, -50, -50, -40, -40, -30};
 
-const char gamephaseInc[6] = {0, 1, 1, 2, 4, 0};
+const int8_t gamephaseInc[6] = {0, 1, 1, 2, 4, 0};
 
 int evaluate(Position *pos)
 {
@@ -138,7 +138,7 @@ int evaluate(Position *pos)
     int8_t gamePhase = 0;
     for (int color = COLOR_WHITE; color <= COLOR_BLACK; color++)
     {
-        for (int pt = PAWN; pt < KING; pt++)
+        for (int pt = PAWN; pt <= KING; pt++)
         {
             uint64_t piece_of_color = pos->occupancy_by_color[color] & pos->type_of_pieces[pt];
             while (piece_of_color != 0)
@@ -149,6 +149,7 @@ int evaluate(Position *pos)
                 {
                     index ^= 56;
                 }
+                gamePhase += gamephaseInc[pt];
                 mg_eval_by_color[color] += PieceSquareTablesMG[index];
                 eg_eval_by_color[color] += PieceSquareTablesEG[index];
                 piece_of_color &= piece_of_color - 1;
@@ -160,7 +161,7 @@ int evaluate(Position *pos)
     /* tapered eval */
     int mgScore = mg_eval_by_color[COLOR_WHITE] - mg_eval_by_color[COLOR_BLACK];
     int egScore = eg_eval_by_color[COLOR_WHITE] - eg_eval_by_color[COLOR_BLACK];
-    int mgPhase = gamePhase;
+    int8_t mgPhase = gamePhase;
     if (mgPhase > 24)
     {
         mgPhase = 24; /* in case of early promotion */
@@ -168,6 +169,6 @@ int evaluate(Position *pos)
 
     int egPhase = 24 - mgPhase;
     int white_perspective_score = (mgScore * mgPhase + egScore * egPhase) / 24;
-    return white_perspective_score;
+    return white_perspective_score * (1 - (2 * pos->sideToMove));
     // return (eval_by_color[COLOR_WHITE] - eval_by_color[COLOR_BLACK]) * (1 - (2 * pos->sideToMove));
 }

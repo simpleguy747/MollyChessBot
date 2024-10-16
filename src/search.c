@@ -24,7 +24,6 @@ long long start_time = 0;
 long long end_time = 0;
 bool stop_search = false;
 
-
 typedef struct LINE
 {
     int cmove;        // Number of moves in the line.
@@ -37,6 +36,31 @@ void CheckIfTimeOver()
     {
         long long current_time = get_current_time_in_milliseconds();
         stop_search = current_time >= end_time ? true : false;
+    }
+}
+
+void sort_moves(MoveList *moveList, int best_move_tt)
+{
+    for (int i = 0; i < moveList->count; i++)
+    {
+        if (moveList->moves[i].move == best_move_tt)
+        {
+            moveList->moves[i].mvv_lva_value += 9000000;
+            break;
+        }
+    }
+    // Sort moves by MVV/LVA score
+    for (int i = 0; i < moveList->count; i++)
+    {
+        for (int j = i + 1; j < moveList->count; j++)
+        {
+            if (moveList->moves[i].mvv_lva_value < moveList->moves[j].mvv_lva_value)
+            {
+                Move temp = moveList->moves[i];
+                moveList->moves[i] = moveList->moves[j];
+                moveList->moves[j] = temp;
+            }
+        }
     }
 }
 
@@ -57,6 +81,7 @@ int QSearch(Position *pos, int ply, int alpha, int beta)
     int eval;
     MoveList moveList[1];
     generate_qsearch_moves(pos, moveList);
+    sort_moves(moveList,0);
     for (int i = 0; i < moveList->count; i++)
     {
         copy_board();
@@ -103,7 +128,8 @@ int NegamaxAlphaBeta(Position *pos, int depth, int ply, int alpha, int beta, LIN
 {
     LINE line;
     line.cmove = 0;
-
+    int best_move_tt = 0;
+    int pvNode = beta - alpha > 1;
     if (depth == 0)
     {
         pline->cmove = 0;
@@ -114,6 +140,7 @@ int NegamaxAlphaBeta(Position *pos, int depth, int ply, int alpha, int beta, LIN
     char movePlayed = 0;
     int eval;
     // Inclusion of hash table.
+
     int hash_flag = hashfALPHA;
     if (ply && is_repetition(pos->hash_key))
     {
@@ -141,9 +168,12 @@ int NegamaxAlphaBeta(Position *pos, int depth, int ply, int alpha, int beta, LIN
         {
             return beta;
         }
+
+        best_move_tt = hash_entry->move;
     }
 
     generate_moves(pos, moveList);
+    sort_moves(moveList,best_move_tt);
     for (int i = 0; i < moveList->count; i++)
     {
         copy_board();
@@ -170,18 +200,20 @@ int NegamaxAlphaBeta(Position *pos, int depth, int ply, int alpha, int beta, LIN
         if (stop_search)
         {
             pline->cmove = 0;
-            return evaluate(pos);
+            return 0;
         }
         if (eval > alpha)
         {
+            best_move_tt = move;
+            alpha = eval;
+            hash_flag = hashfEXACT;
             if (eval >= beta)
             {
-                write_hash_entry(beta, depth, hashfBETA, pos->hash_key, ply);
+                write_hash_entry(beta, depth, hashfBETA, pos->hash_key, ply, best_move_tt);
                 return beta;
             }
 
-            alpha = eval;
-            hash_flag = hashfEXACT;
+            
             if (ply == 0)
             {
                 if (!stop_search)
@@ -205,7 +237,7 @@ int NegamaxAlphaBeta(Position *pos, int depth, int ply, int alpha, int beta, LIN
         return is_check(pos) ? (-MATE_VAL + ply) : 0;
     }
 
-    write_hash_entry(alpha, depth, hash_flag, pos->hash_key, ply);
+    write_hash_entry(alpha, depth, hash_flag, pos->hash_key, ply, best_move_tt);
     return alpha;
 }
 

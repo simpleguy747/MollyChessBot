@@ -2,3 +2,5 @@
 dist
 dist-r
 engine-test
+tuner/project/tuner_env
+tuner/project/__pycache__

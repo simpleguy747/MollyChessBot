@@ -14,22 +14,7 @@
 #include "eval.h"
 #include "mvvlva.h"
 
-void sort_moves(MoveList *moveList)
-{
-    // Sort moves by MVV/LVA score
-    for (int i = 0; i < moveList->count; i++)
-    {
-        for (int j = i + 1; j < moveList->count; j++)
-        {
-            if (moveList->moves[i].mvv_lva_value < moveList->moves[j].mvv_lva_value)
-            {
-                Move temp = moveList->moves[i];
-                moveList->moves[i] = moveList->moves[j];
-                moveList->moves[j] = temp;
-            }
-        }
-    }
-}
+
 
 void generate_capture_moves(const int us, const Position *pos, MoveList *moveList, const uint64_t emptyBitboard, uint64_t enemyBitboard, int forwardDirection)
 {
@@ -39,7 +24,6 @@ void generate_capture_moves(const int us, const Position *pos, MoveList *moveLis
     generate_queen_moves(us, pos, moveList, enemyBitboard, ~emptyBitboard, MOVE_TYPE_QUEEN);
     generate_bishop_moves(us, pos, moveList, enemyBitboard, ~emptyBitboard, MOVE_TYPE_BISHOP);
     generate_rook_moves(us, pos, moveList, enemyBitboard, ~emptyBitboard, MOVE_TYPE_ROOK);
-    sort_moves(moveList);
 }
 
 void generate_non_captures(const int us, const Position *pos, MoveList *moveList, const uint64_t emptyBitboard, int forwardDirection)

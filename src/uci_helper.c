@@ -124,8 +124,6 @@ void position(char *command)
     if (command)
     {
         int index_1 = 1;
-        display_board(pos);
-        printf("\n");
         repetition_index = 0;
         command[strcspn(command, "\n")] = '\0';
         char *moveStr = strtok(command, " ");
@@ -168,10 +166,6 @@ void position(char *command)
             assert(moveMade != 0);
             RepetitionTable[repetition_index] = generate_hash_key_from_scratch(pos);
             repetition_index = repetition_index + 1;
-            display_board(pos);
-            printf("%d %s\n", index_1++, moveStr);
-
-            printf("\n");
             moveStr = strtok(NULL, " ");
         }
     }
@@ -217,7 +211,7 @@ void go(char *command)
 
     // printf("wtime%d,btime:%d,winc:%d,binc:%d\n", uciHelper.wtime, uciHelper.btime, uciHelper.winc, uciHelper.binc);
     root_search(&uciHelper, pos);
-    fflush(stdout);
+    (void)fflush(stdout);
 }
 
 // Handle the 'stop' command

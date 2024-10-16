@@ -1,41 +1,29 @@
 # Compiler
-CC := clang
+CC := gcc
 
 # Directories
 SRCDIR := src
-INCDIR := $(SRCDIR)/headers
+INCDIR := src/headers
 BUILDDIR := dist
 DEBUGDIR := $(BUILDDIR)/debug
 RELEASEDIR := $(BUILDDIR)/release
 
 # Flags
-CFLAGS := -Wall -Wextra -Wpedantic -I$(INCDIR)
-DEBUGFLAGS := -g -fsanitize=undefined
+CFLAGS := -Wall -I $(INCDIR)
+DEBUGFLAGS := -g
 RELEASEFLAGS := -O3
-
-# Sanitizers (choose one)
-# DEBUGFLAGS += -fsanitize=address
-# DEBUGFLAGS += -fsanitize=memory
-# DEBUGFLAGS += -fsanitize=dataflow
-# DEBUGFLAGS += -fsanitize=leak
 
 # Source files
 SRCS := $(shell find $(SRCDIR) -name '*.c')
-
-# Object files
-OBJS := $(SRCS:.c=.o)
-
 # Executable name
 EXEC := mollybot
 
 # Targets
-.PHONY: all clean debug release clang-tidy
+.PHONY: all clean
 
 all: clean debug
 
-debug-exe: clean debug
-
-release-exe: clean release execute-release
+debug-exe: clean debug execute
 
 execute:
 	$(DEBUGDIR)/$(EXEC)
@@ -47,22 +35,13 @@ debug: $(DEBUGDIR)/$(EXEC)
 
 release: $(RELEASEDIR)/$(EXEC)
 
-$(DEBUGDIR)/$(EXEC): $(OBJS)
+$(DEBUGDIR)/$(EXEC): $(SRCS)
 	mkdir -p $(DEBUGDIR)
 	$(CC) $(CFLAGS) $(DEBUGFLAGS) $^ -o $@
 
-$(RELEASEDIR)/$(EXEC): $(OBJS)
+$(RELEASEDIR)/$(EXEC): $(SRCS)
 	mkdir -p $(RELEASEDIR)
 	$(CC) $(CFLAGS) $(RELEASEFLAGS) $^ -o $@
 
-%.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
-
-clang-tidy:
-	bear make
-	clang-tidy src/bench.c --checks=-*,clang-analyzer-*,cert-* --header-filter=$(INCDIR)
-
 clean:
 	rm -rf $(BUILDDIR)
-
-lint: clang-tidy

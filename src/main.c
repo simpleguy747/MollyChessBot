@@ -19,10 +19,9 @@
 #include "squares.h"
 #include "perft_manager.h"
 #include "transposition_table.h"
-#include "tuner.h"
+
 int main()
 {
   uci_loop();
-
   return 0;
 }
