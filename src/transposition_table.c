@@ -35,7 +35,7 @@ void write_hash_entry(int eval, int depth, int hash_flag, uint64_t hash_key, int
         eval += ply;
 
     hash_entry->key = hash_key;
-    hash_entry->move = move;
+    // hash_entry->move = move;
     hash_entry->eval = eval;
     hash_entry->depth = depth;
     hash_entry->flag = hash_flag;
