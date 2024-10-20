@@ -41,14 +41,14 @@ void CheckIfTimeOver()
 
 void sort_moves(MoveList *moveList, int best_move_tt)
 {
-    // for (int i = 0; i < moveList->count; i++)
-    // {
-    //     if (moveList->moves[i].move == best_move_tt)
-    //     {
-    //         moveList->moves[i].mvv_lva_value += 9000000;
-    //         break;
-    //     }
-    // }
+    for (int i = 0; i < moveList->count; i++)
+    {
+        if (moveList->moves[i].move == best_move_tt)
+        {
+            moveList->moves[i].mvv_lva_value += 9000000;
+            break;
+        }
+    }
     // Sort moves by MVV/LVA score
     for (int i = 0; i < moveList->count; i++)
     {
@@ -169,7 +169,7 @@ int NegamaxAlphaBeta(Position *pos, int depth, int ply, int alpha, int beta, LIN
             return beta;
         }
 
-        // best_move_tt = hash_entry->move;
+        best_move_tt = hash_entry->move;
     }
 
     generate_moves(pos, moveList);
